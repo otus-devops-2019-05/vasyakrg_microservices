@@ -1,0 +1,13 @@
+dist: trusty
+sudo: required
+language: bash
+
+before_install:
+  - curl https://raw.githubusercontent.com/express42/otus-homeworks/2019-05/run.sh | bash
+# mytests
+#  - curl https://gist.githubusercontent.com/vasyakrg/3497e8f834de64e7aed245951985b1c0/raw/24b389c66c87f2d33e434065daa0aac394c92d24/docker-otus.sh | bash
+
+notifications:
+  slack:
+    rooms:
+      secure: cEN9tfn0LvK4iSBWLHArZ0aG+uL+KB+JqRGrH1vYat1FSn5yJLHTIxeL8l01goCJefizoQYmFNCWAiZYO7g9+hiEo+Ci7sjnHZtZS1BGAaHU7B0AI1jNgUhQy03BFZCJCUvkGjkF4Ikd5BRSkYSeQwoWjjyzb9yimIkrje7pGTKsfXYsFF4k7BGAhAEjcMqaVCFE2oXr3w+e1R0jDMWVfT3Zg5yuXjQPMTLVYAF2SB64sNhUwc1sNJ6npwD9+WupBgxf39tfVEkekF2UeppEbCERK0ctqDNqg27Pu3DJTH+93UgVBRllojvjQzA0FhESo12MhAVYLmBy99OyTgRdEN+fHvy282HUvLejA9h8JmD6cz6MkZDGo2LSDVELP15xWFgt0xGKueRSsCMGMbInFjHjgjsOUGc8BcWIN39bU3IsHjSJ275q8/jm/ehfsPmK4WCiJZ9yFZth4Bv61dWzFKspHVF9jlG5XQ1XOoXrEzMxZeVRod8lDr/nT4K46FYJ/lPWJLuCmmofd/3QAjJGIFCeg27+2PU6tMk/t5n8bjtBGQ4M46zRQtbMsyxLzX3eDSBsP9mzKDApTcYMqiIQUOpz2n/J7fGvmA3lQoQ7zl1xBJDV16OC+8py7J0mjQHKF6UVUDBTq2gcdf5W2YktlxrmwIi470xAUBCCR1nRx7A=
