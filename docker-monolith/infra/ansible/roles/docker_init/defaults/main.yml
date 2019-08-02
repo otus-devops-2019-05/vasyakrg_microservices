@@ -1,0 +1,5 @@
+---
+# defaults file for docker_init
+default_container_image: ""
+default_container_name: ""
+published_ports: ""

@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: yes
+  roles:
+    - role: marvinpinto.docker
+      tags: install
+      become: true
+
+    - role: docker_init
+      tags: init
+      vars:
+        -  default_container_image: "vasyakrg/otus-reddit:1.0"
+        -  default_container_name: "puma-app"
+        -  published_ports: "9292:9292"
+        -  docker_users:
+              - "{{ lookup('env','USER') }}"
