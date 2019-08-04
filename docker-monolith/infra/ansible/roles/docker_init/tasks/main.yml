@@ -1,0 +1,26 @@
+---
+- name: adding docker users (for use without sudo)
+  user:
+    name: "{{ ansible_env['USER'] }}"
+    append: yes
+    groups: docker
+  become: true
+
+- name: 'Puma-app init'
+  docker_container:
+    name: "{{ default_container_name }}"
+    image: "{{ default_container_image }}"
+    state: started
+    restart_policy: always
+    published_ports: "{{ published_ports }}"
+  tags: puma
+
+- name: check container status
+  command: docker ps
+  register: result
+  tags: puma
+
+- debug:
+    var:
+      result.stdout
+  tags: puma

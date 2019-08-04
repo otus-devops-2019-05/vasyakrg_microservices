@@ -1,0 +1,10 @@
+.github
+rp.md
+*.tfstate
+*.tfstate.*
+*.tfstate.*.backup
+*.tfstate.backup
+*.tfvars
+variables.tf
+.terraform/
+.idea

@@ -1,0 +1,8 @@
+{
+    "project_id": "docker-123456",
+    "project_name": "docker-app",
+    "source_image_family": "ubuntu-1604-lts",
+    "disk_size": "10",
+    "default_user": "appuser",
+    "image_description": "Tempalate with Docker-CE on Ubuntu 16"
+}

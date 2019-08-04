@@ -1,0 +1,7 @@
+REPOSITORY                 TAG                 IMAGE ID            CREATED             SIZE
+vasyakrg/ubuntu-tmp-file   latest              4ebb98526c51        2 minutes ago       120MB
+ubuntu                     16.04               5e13f8dd4c1a        7 days ago          120MB
+hello-world                latest              fce289e99eb9        7 months ago        1.84kB
+
+Если контейнер - это конкретная сущность, имеющая показатели состояния, настройки сети, подключенных волюмов и конкретный пид в системе,
+то имадж - это слепок (снапшот) с конкретно взятой сущности (и его слоев), на основе которого потом можно запустить новую сущность
