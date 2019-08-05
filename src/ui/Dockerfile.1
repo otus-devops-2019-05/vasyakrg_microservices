@@ -1,10 +1,10 @@
-FROM ubuntu:16.04
-RUN apt-get update \
-    && apt-get install -y ruby-full ruby-dev build-essential \
-    && gem install bundler --no-ri --no-rdoc
+# vasyakrg/ui         3.0                 55ec2c8f6ab1        7 seconds ago       305MB
 
+FROM ruby:2.3-alpine
 ENV APP_HOME /app
-RUN mkdir $APP_HOME
+
+RUN apk add --no-cache build-base ruby ruby-dev && \
+    mkdir $APP_HOME
 
 WORKDIR $APP_HOME
 ADD Gemfile* $APP_HOME/
