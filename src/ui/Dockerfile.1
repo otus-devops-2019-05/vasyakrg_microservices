@@ -1,0 +1,19 @@
+# vasyakrg/ui         3.0                 55ec2c8f6ab1        7 seconds ago       305MB
+
+FROM ruby:2.3-alpine
+ENV APP_HOME /app
+
+RUN apk add --no-cache build-base ruby ruby-dev && \
+    mkdir $APP_HOME
+
+WORKDIR $APP_HOME
+ADD Gemfile* $APP_HOME/
+RUN bundle install
+ADD . $APP_HOME
+
+ENV POST_SERVICE_HOST myposts
+ENV POST_SERVICE_PORT 5000
+ENV COMMENT_SERVICE_HOST mycomments
+ENV COMMENT_SERVICE_PORT 9292
+
+CMD ["puma"]
