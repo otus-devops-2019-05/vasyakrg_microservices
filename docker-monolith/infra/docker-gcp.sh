@@ -7,6 +7,7 @@ docker-machine create --driver google \
  --google-machine-type n1-standard-1 \
  --google-zone europe-west1-b \
  --google-project $GOOGLE_PROJECT \
+ --google-tags puma \
  docker-host
 
 sleep 10
