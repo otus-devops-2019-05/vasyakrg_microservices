@@ -1,6 +1,5 @@
 version: '3.3'
 services:
-  #docker DB
   post_db:
     image: mongo:3.2
     volumes:
@@ -33,4 +32,10 @@ volumes:
   post_db:
 networks:
   back_net:
+    ipam:
+      config:
+        - subnet: "10.10.1.0/24"
   front_net:
+    ipam:
+      config:
+        - subnet: "10.10.2.0/24"
