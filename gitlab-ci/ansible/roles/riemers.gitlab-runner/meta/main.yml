@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  author: Vassiliy Yegorov
+  author: Erik-jan Riemers
   description: GitLab Runner
   license: MIT
   min_ansible_version: 2.0
