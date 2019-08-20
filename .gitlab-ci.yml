@@ -9,7 +9,7 @@ stages:
 
 variables:
   DATABASE_URL: 'mongodb://mongo/user_posts'
-  DOCKER_HOST: tcp://127.0.0.1:2375
+  # DOCKER_HOST: tcp://127.0.0.1:2375
 
 before_script:
  - cd reddit
