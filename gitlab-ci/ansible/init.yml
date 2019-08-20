@@ -11,13 +11,16 @@
             - executor: shell
               # docker_image: 'alpine'
               tags:
-                - ruby
+                - linux
+                - xenial
+                - ubuntu
+                - docker
               # docker_volumes:
                 # - "/var/run/docker.sock:/var/run/docker.sock"
                 # - "/cache"
               # extra_configs:
-              # runners.docker:
-                # - memory: 256m
-                # - allowed_images: ["ruby:*", "python:*", "php:*"]
-              # runners.docker.sysctls:
-                # - net.ipv4.ip_forward: "1"
+                # runners.docker:
+                  # memory: 256m
+                  # allowed_images: ["ruby:*", "python:*", "php:*"]
+                # runners.docker.sysctls:
+                  # net.ipv4.ip_forward: "1"
