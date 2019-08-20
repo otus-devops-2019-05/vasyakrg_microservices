@@ -15,12 +15,12 @@ before_script:
  - bundle install
 
 build_job:
-  image: docker:latest
+  # image: docker:latest
   stage: build
   script:
     - echo 'Building'
-    - cd docker-monolith
-    - docker build -t vasyakrg/reddit:${CI_PIPELINE_ID}
+    # - cd docker-monolith
+    # - docker build -t vasyakrg/reddit:${CI_PIPELINE_ID}
 
 test_unit_job:
   stage: test
