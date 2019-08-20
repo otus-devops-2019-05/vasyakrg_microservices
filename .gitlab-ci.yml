@@ -17,7 +17,7 @@ before_script:
 build_job:
   stage: build
   services:
-    - docker:latest
+    - docker:dind
   before_script:
     - docker info
   script:
