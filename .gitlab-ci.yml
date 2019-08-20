@@ -16,9 +16,13 @@ before_script:
 
 build_job:
   stage: build
+  services:
+    - docker:latest
+  before_script:
+    - docker info
   script:
     - echo 'Building'
-    - docker build -t vasyakrg/reddit:${CI_PIPELINE_ID}
+    - docker build -t vasyakrg/reddit:${CI_PIPELINE_ID} .
 
 test_unit_job:
   stage: test
