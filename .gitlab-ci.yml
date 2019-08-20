@@ -1,4 +1,4 @@
-image: ruby:2.4.2
+image: docker:latest
 
 stages:
   - build
@@ -17,8 +17,6 @@ before_script:
 
 build_job:
   stage: build
-  services:
-    - docker:dind
   before_script:
     - docker info
   script:
