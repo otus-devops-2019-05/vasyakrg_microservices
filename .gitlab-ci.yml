@@ -40,10 +40,11 @@ test_unit_job:
   script:
     # - ruby simpletest.rb
     - echo 'Testing 2'
-    - scp docker-compose.yml appuser@docker-test1.aits.life:/home/appuser
-    - ssh appuser@docker-test1.aits.life "sudo docker-compose up -d"
-    - ssh appuser@docker-test1.aits.life "sudo docker exec -it vasyakrg_microservices_reddit_1 bash -c 'cd reddit/ && ruby simpletest.rb'"
-    - ssh appuser@docker-test1.aits.life "sudo docker-compose down"
+    - docker run -it -rm -p 9292:9292 vasyakrg/reddit:latest
+    # - scp docker-compose.yml appuser@docker-test1.aits.life:/home/appuser
+    # - ssh appuser@docker-test1.aits.life "sudo docker-compose up -d"
+    # - ssh appuser@docker-test1.aits.life "sudo docker exec -it vasyakrg_microservices_reddit_1 bash -c 'cd reddit/ && ruby simpletest.rb'"
+    # - ssh appuser@docker-test1.aits.life "sudo docker-compose down"
 
 test_integration_job:
   stage: test
