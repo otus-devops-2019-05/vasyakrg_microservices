@@ -1,4 +1,4 @@
-image: docker:latest
+image: vasyakrg/docker:latest
 
 stages:
   - build
@@ -11,15 +11,17 @@ variables:
   DATABASE_URL: 'mongodb://mongo/user_posts'
 
 before_script:
-  - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-  - pip install docker-compose
-  - docker info
+  - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+  # - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+  # - pip install docker-compose
+  # - docker info
 
 build_job:
   stage: build
   script:
     - echo 'Building'
-    - docker-compose build
+    - docker-compose build -t vasyakrg/reddit-$CI_COMMIT_REF_NAME
+    - docker push vasyakrg/reddit-$CI_COMMIT_REF_NAME
 
 test_unit_job:
   stage: test
@@ -43,11 +45,11 @@ deploy_dev_job:
   stage: review
   script:
     - echo 'Deploy'
-    - docker-compose down
-    - docker-compose up -d
+    - docker stop reddit
+    - docker run --rm -d -n reddit -p 9292:9292 --name redit vasyakrg/reddit-$CI_COMMIT_REF_NAME
   environment:
     name: dev
-    url: http://dev.example.com:9292
+    url: http://docker1.aits.life:9292
   tags:
     - ubuntu
 
