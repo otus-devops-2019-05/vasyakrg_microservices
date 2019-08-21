@@ -10,11 +10,14 @@ stages:
 # variables:
 #   DATABASE_URL: 'mongodb://mongo/user_posts'
 
-# before_script:
-#   - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD docker.io
-  # - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
-  # - pip install docker-compose
-  # - docker info
+before_script:
+  - apk update
+  - apk add openssh-client
+  - eval $(ssh-agent -s)
+  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
 
 build_job:
   stage: build
@@ -34,8 +37,6 @@ test_unit_job:
 
 test_unit_job:
   stage: test
-  before_script:
-    - gitlab-ci/apk-ssh.sh
   script:
     # - ruby simpletest.rb
     - echo 'Testing 2'
