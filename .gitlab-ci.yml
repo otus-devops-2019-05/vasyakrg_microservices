@@ -46,9 +46,8 @@ test_integration_job:
 deploy_dev_job:
   stage: review
   before_script:
-    - apt-get update -qq
-    - apt-get install -qq git
-    - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+    - apk update
+    - apk add openssh
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
     - mkdir -p ~/.ssh
