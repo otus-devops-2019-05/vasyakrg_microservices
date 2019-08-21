@@ -44,7 +44,7 @@ test_integration_job:
     - echo 'Testing 2'
 
 deploy_dev_job:
-variables:
+  variables:
     DOCKER_HOST: tcp://{manager_ip_address}:2376
   stage: review
   script:
