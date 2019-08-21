@@ -7,8 +7,8 @@ stages:
   - stage
   - production
 
-variables:
-  DATABASE_URL: 'mongodb://mongo/user_posts'
+# variables:
+#   DATABASE_URL: 'mongodb://mongo/user_posts'
 
 before_script:
   - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD
@@ -20,7 +20,7 @@ build_job:
   stage: build
   script:
     - echo 'Building'
-    - docker-compose build -t vasyakrg/reddit-$CI_COMMIT_REF_NAME
+    - docker build -t vasyakrg/reddit-$CI_COMMIT_REF_NAME
     - docker push vasyakrg/reddit-$CI_COMMIT_REF_NAME
 
 test_unit_job:
