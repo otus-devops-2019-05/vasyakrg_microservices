@@ -55,7 +55,8 @@ deploy_dev_job:
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - echo 'Deploy'
-    - ssh appuser@docker1.aits.life "sudo docker stop $(docker ps -aq) && sudo docker run --rm -d -p 9292:9292 --name reddit vasyakrg/reddit:$CI_JOB_ID"
+    - ssh appuser@docker1.aits.life "sudo docker stop $(docker ps -aq)"
+    - ssh appuser@docker1.aits.life "sudo docker run --rm -d -p 9292:9292 --name reddit vasyakrg/reddit:$CI_JOB_ID"
   environment:
     name: dev
     url: http://docker1.aits.life:9292
