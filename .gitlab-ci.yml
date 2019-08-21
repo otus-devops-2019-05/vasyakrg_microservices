@@ -44,7 +44,7 @@ test_integration_job:
 deploy_dev_job:
   stage: review
   services:
-    - vasya/docker:latest
+    - vasyakrg/docker:latest
   script:
     - echo 'Deploy'
     - docker stop reddit
