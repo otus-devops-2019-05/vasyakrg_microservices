@@ -43,7 +43,7 @@ test_integration_job:
 
 deploy_dev_job:
   stage: review
-  service:
+  services:
     - vasya/docker:latest
   script:
     - echo 'Deploy'
