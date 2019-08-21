@@ -1,6 +1,6 @@
 version: '3.3'
 services:
   reddit:
-    image: vasyakrg/reddit:$CI_JOB_ID
+    image: vasyakrg/reddit:latest
     ports:
       - 9292:9292

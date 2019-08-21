@@ -23,7 +23,9 @@ build_job:
   script:
     - echo 'Building'
     - docker build -t vasyakrg/reddit:$CI_JOB_ID .
+    - docker tag vasyakrg/reddit:$CI_JOB_ID vasyakrg/reddit:latest
     - docker push vasyakrg/reddit:$CI_JOB_ID
+    - docker push vasyakrg/reddit::last
 
 test_unit_job:
   stage: test
@@ -56,7 +58,6 @@ deploy_dev_job:
   script:
     - echo 'Deploy'
     - scp docker-compose.yml appuser@docker1.aits.life:/home/appuser
-    - ssh appuser@docker1.aits.life "sudo export CI_JOB_ID=$CI_JOB_ID"
     - ssh appuser@docker1.aits.life "sudo docker-compose down && docker-compose up -d"
   environment:
     name: dev
