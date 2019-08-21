@@ -1,4 +1,4 @@
-image: vasyakrg/docker:latest
+image: ruby:2.4.2
 
 stages:
   - build
@@ -7,28 +7,17 @@ stages:
   - stage
   - production
 
-# variables:
-#   DATABASE_URL: 'mongodb://mongo/user_posts'
+variables:
+  DATABASE_URL: 'mongodb://mongo/user_posts'
 
 before_script:
-  - apk update
-  - apk add openssh-client
-  - eval $(ssh-agent -s)
-  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-  - mkdir -p ~/.ssh
-  - chmod 700 ~/.ssh
-  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+ - cd reddit
+ - bundle install
 
 build_job:
   stage: build
-  before_script:
-    - echo $REGISTRY_PASSWORD | docker login -u $REGISTRY_USER --password-stdin docker.io
   script:
     - echo 'Building'
-    - docker build -t vasyakrg/reddit:$CI_JOB_ID .
-    - docker tag vasyakrg/reddit:$CI_JOB_ID vasyakrg/reddit:latest
-    - docker push vasyakrg/reddit:$CI_JOB_ID
-    - docker push vasyakrg/reddit:latest
 
 test_unit_job:
   stage: test
@@ -37,13 +26,10 @@ test_unit_job:
 
 test_unit_job:
   stage: test
+  services:
+    - mongo:latest
   script:
-    # - ruby simpletest.rb
-    - echo 'Testing 2'
-    - scp docker-compose.yml appuser@docker-test2.aits.life:/home/appuser
-    - ssh appuser@docker-test2.aits.life "sudo docker-compose up -d"
-    - ssh appuser@docker-test2.aits.life "sudo docker exec appuser_reddit_1 bash -c 'cd /reddit && ruby simpletest.rb'"
-    - ssh appuser@docker-test2.aits.life "sudo docker-compose down"
+    - ruby simpletest.rb
 
 test_integration_job:
   stage: test
@@ -54,13 +40,9 @@ deploy_dev_job:
   stage: review
   script:
     - echo 'Deploy'
-    - scp docker-compose.yml appuser@docker1.aits.life:/home/appuser
-    - ssh appuser@docker1.aits.life "sudo docker-compose down && sudo docker-compose up -d"
   environment:
     name: dev
-    url: http://docker1.aits.life:9292
-  tags:
-    - ubuntu
+    url: http://dev.example.com
 
 branch review:
  stage: review
