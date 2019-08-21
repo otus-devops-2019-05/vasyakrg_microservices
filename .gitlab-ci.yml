@@ -34,11 +34,15 @@ test_unit_job:
 
 test_unit_job:
   stage: test
-  # services:
-  #   - mongo:latest
+  before_script:
+    - gitlab-ci/apk-ssh.sh
   script:
     # - ruby simpletest.rb
     - echo 'Testing 2'
+    - scp docker-compose.yml appuser@docker-test1.aits.life:/home/appuser
+    - ssh appuser@docker-test1.aits.life "sudo docker-compose up -d"
+    - ssh appuser@docker-test1.aits.life "sudo docker exec -it vasyakrg_microservices_reddit_1 bash -c 'cd reddit/ && ruby simpletest.rb'"
+    - ssh appuser@docker-test1.aits.life "sudo docker-compose down"
 
 test_integration_job:
   stage: test
@@ -48,13 +52,7 @@ test_integration_job:
 deploy_dev_job:
   stage: review
   before_script:
-    - apk update
-    - apk add openssh-client
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - gitlab-ci/apk-ssh.sh
   script:
     - echo 'Deploy'
     - scp docker-compose.yml appuser@docker1.aits.life:/home/appuser
