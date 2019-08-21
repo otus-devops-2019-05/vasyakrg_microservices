@@ -43,12 +43,11 @@ test_integration_job:
 
 deploy_dev_job:
   stage: review
-  services:
-    - vasyakrg/docker:latest
   script:
     - echo 'Deploy'
-    - docker stop reddit
-    - docker run --rm -d -n reddit -p 9292:9292 --name redit vasyakrg/reddit-CI_JOB_ID
+    - docker-compose stop
+    # - docker run --rm -d -n reddit -p 9292:9292 --name redit vasyakrg/reddit-$CI_JOB_ID
+    - docker-compose up -d
   environment:
     name: dev
     url: http://docker1.aits.life:9292
