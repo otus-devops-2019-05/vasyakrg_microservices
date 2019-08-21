@@ -9,11 +9,10 @@ stages:
 
 variables:
   DATABASE_URL: 'mongodb://mongo/user_posts'
-  # DOCKER_HOST: tcp://127.0.0.1:2375
 
 before_script:
- - cd reddit
- - bundle install
+  - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
+  - pip install docker-compose
 
 build_job:
   stage: build
@@ -21,7 +20,7 @@ build_job:
     - docker info
   script:
     - echo 'Building'
-    - docker build -t vasyakrg/reddit:${CI_PIPELINE_ID} .
+    - docker-compose build .
 
 test_unit_job:
   stage: test
@@ -30,10 +29,11 @@ test_unit_job:
 
 test_unit_job:
   stage: test
-  services:
-    - mongo:latest
+  # services:
+  #   - mongo:latest
   script:
-    - ruby simpletest.rb
+    # - ruby simpletest.rb
+    - echo 'Testing 2'
 
 test_integration_job:
   stage: test
@@ -44,9 +44,11 @@ deploy_dev_job:
   stage: review
   script:
     - echo 'Deploy'
+    - docker-compose down
+    - docker-compose up -d
   environment:
     name: dev
-    url: http://dev.example.com
+    url: http://dev.example.com:9292
 
 branch review:
  stage: review

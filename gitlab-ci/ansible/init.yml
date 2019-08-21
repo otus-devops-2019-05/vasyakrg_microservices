@@ -24,4 +24,4 @@
             extra_configs:
               runners.docker:
                 memory: 512m
-                allowed_images: ["ruby:*", "python:*", "php:*"]
+                # allowed_images: ["ruby:*", "python:*", "php:*"]
