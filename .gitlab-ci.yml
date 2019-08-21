@@ -25,7 +25,7 @@ build_job:
     - docker build -t vasyakrg/reddit:$CI_JOB_ID .
     - docker tag vasyakrg/reddit:$CI_JOB_ID vasyakrg/reddit:latest
     - docker push vasyakrg/reddit:$CI_JOB_ID
-    - docker push vasyakrg/reddit::last
+    - docker push vasyakrg/reddit::latest
 
 test_unit_job:
   stage: test
