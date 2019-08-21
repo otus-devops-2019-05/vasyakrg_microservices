@@ -52,8 +52,6 @@ test_integration_job:
 
 deploy_dev_job:
   stage: review
-  before_script:
-    - gitlab-ci/apk-ssh.sh
   script:
     - echo 'Deploy'
     - scp docker-compose.yml appuser@docker1.aits.life:/home/appuser
