@@ -11,7 +11,7 @@ stages:
 #   DATABASE_URL: 'mongodb://mongo/user_posts'
 
 before_script:
-  - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD
+  - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD docker.io
   # - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
   # - pip install docker-compose
   # - docker info
@@ -20,8 +20,8 @@ build_job:
   stage: build
   script:
     - echo 'Building'
-    - docker build -t vasyakrg/reddit-$CI_COMMIT_REF_NAME .
-    - docker push vasyakrg/reddit-$CI_COMMIT_REF_NAME
+    - docker build -t vasyakrg/reddit-$CI_JOB_ID .
+    - docker push vasyakrg/reddit-CI_JOB_ID
 
 test_unit_job:
   stage: test
@@ -46,7 +46,7 @@ deploy_dev_job:
   script:
     - echo 'Deploy'
     - docker stop reddit
-    - docker run --rm -d -n reddit -p 9292:9292 --name redit vasyakrg/reddit-$CI_COMMIT_REF_NAME
+    - docker run --rm -d -n reddit -p 9292:9292 --name redit vasyakrg/reddit-CI_JOB_ID
   environment:
     name: dev
     url: http://docker1.aits.life:9292
