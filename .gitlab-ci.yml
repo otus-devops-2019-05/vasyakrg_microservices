@@ -10,14 +10,16 @@ stages:
 # variables:
 #   DATABASE_URL: 'mongodb://mongo/user_posts'
 
-before_script:
-  - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD docker.io
+# before_script:
+#   - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD docker.io
   # - apk add --no-cache py-pip python-dev libffi-dev openssl-dev gcc libc-dev make
   # - pip install docker-compose
   # - docker info
 
 build_job:
   stage: build
+  before_script:
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD docker.io
   script:
     - echo 'Building'
     - docker build -t vasyakrg/reddit-$CI_JOB_ID .
