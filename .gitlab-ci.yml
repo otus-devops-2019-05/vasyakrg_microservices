@@ -48,6 +48,7 @@ deploy_dev_job:
   environment:
     name: dev
     url: http://dev.example.com:9292
+  tags: ubuntu
 
 branch review:
  stage: review
