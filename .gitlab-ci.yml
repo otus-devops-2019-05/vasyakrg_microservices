@@ -57,7 +57,7 @@ deploy_dev_job:
     - echo 'Deploy'
     # - scp docker-compose.yml appuser@docker1.aits.life:/home/appuser
     # - scp Dockerfile appuser@docker1.aits.life:/home/appuser
-    - ssh appuser@docker1.aits.life "sudo docker-compose down && docker-compose up -d"
+    - ssh appuser@docker1.aits.life "sudo ls -la && sudo docker-compose down && docker-compose up -d"
   environment:
     name: dev
     url: http://docker1.aits.life:9292
