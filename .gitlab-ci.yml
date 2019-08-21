@@ -55,8 +55,8 @@ deploy_dev_job:
     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - echo 'Deploy'
-    - scp docker-compose.yml appuser@docker1.aits.life:$HOME
-    - ssh appuser@docker1.aits.life "export CI_JOB_ID=$CI_JOB_ID"
+    - scp docker-compose.yml appuser@docker1.aits.life:/home/appuser
+    - ssh appuser@docker1.aits.life "sudo export CI_JOB_ID=$CI_JOB_ID"
     - ssh appuser@docker1.aits.life "sudo docker-compose down && docker-compose up -d"
   environment:
     name: dev
