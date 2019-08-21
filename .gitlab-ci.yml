@@ -20,7 +20,7 @@ build_job:
     - docker info
   script:
     - echo 'Building'
-    - docker-compose build .
+    - docker-compose build
 
 test_unit_job:
   stage: test
