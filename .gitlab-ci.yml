@@ -19,7 +19,7 @@ stages:
 build_job:
   stage: build
   before_script:
-    - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD docker.io
+    - echo $REGISTRY_PASSWORD | docker login -u $REGISTRY_USER --password-stdin docker.io
   script:
     - echo 'Building'
     - docker build -t vasyakrg/reddit:$CI_JOB_ID .
@@ -44,6 +44,8 @@ test_integration_job:
     - echo 'Testing 2'
 
 deploy_dev_job:
+variables:
+    DOCKER_HOST: tcp://{manager_ip_address}:2376
   stage: review
   script:
     - echo 'Deploy'
@@ -52,7 +54,7 @@ deploy_dev_job:
     - docker-compose up -d
   environment:
     name: dev
-    url: http://docker1.aits.life:9292
+    url: http://{manager_ip_address}:9292
   tags:
     - ubuntu
 
