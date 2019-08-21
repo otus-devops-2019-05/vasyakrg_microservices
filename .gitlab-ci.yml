@@ -44,15 +44,18 @@ test_integration_job:
     - echo 'Testing 2'
 
 deploy_dev_job:
-  variables:
-    DOCKER_HOST: tcp://docker1.aits.life:2376
   stage: review
+  before_script:
+    - apt-get update -qq
+    - apt-get install -qq git
+    - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     - echo 'Deploy'
-    - docker-compose stop
-    # - docker run --rm -d -n reddit -p 9292:9292 --name redit vasyakrg/reddit-$CI_JOB_ID
-    - docker-compose up -d
-    # - docker stack deploy -c docker-compose.yml env_name --with-registry-auth
+    - ssh appuser@docker1.aits.life "docker stop reddit && docker run --rm -d -n reddit -p 9292:9292 --name reddit vasyakrg/reddit-$CI_JOB_ID"
   environment:
     name: dev
     url: http://docker1.aits.life:9292
