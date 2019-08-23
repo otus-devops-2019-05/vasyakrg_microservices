@@ -1,6 +1,16 @@
 # vasyakrg_microservices
 [![Build Status](https://travis-ci.com/otus-devops-2019-05/vasyakrg_microservices.svg?branch=master)](https://travis-ci.com/otus-devops-2019-05/vasyakrg_microservices)
 
+## HW4
+ - поднял контейнер с прометеем, поигрался с графиками, паданием сервисов
+ - поднял нод-экспортер, пробросил его в сеть с прометеем, положил CPU с докер-хоста :)
+ - залил все имаджи на [hub.docker.com](https://hub.docker.com/u/vasyakrg)
+
+### Задание со *
+### Задание со **
+### Задание со ***
+
+
 ## HW3
  - через терраформ создается и поднимается машина с установленным доккером и gitlab-ci в одном из докеров
  - с помощью скриптов в папке gitlab-ci можно поднять нужно кол-во ранеров на чистых машинах
