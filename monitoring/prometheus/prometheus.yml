@@ -22,3 +22,10 @@ scrape_configs:
     static_configs:
       - targets:
         - 'node-exporter:9100'
+
+  - job_name: 'mongo_db'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+    static_configs:
+      - targets:
+        - 'mongodb-exporter:9216'

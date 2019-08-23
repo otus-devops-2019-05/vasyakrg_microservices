@@ -57,6 +57,13 @@ services:
         - '--path.sysfs=/host/sys'
         - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
 
+  mongodb-exporter:
+    image: $USER_NAME/mongodb-exporter
+    environment:
+      - MONGODB_URI=mongodb://post_db:27017
+    networks:
+      - back_net
+
 volumes:
   post_db:
   prometheus_data:

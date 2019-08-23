@@ -9,6 +9,8 @@
 - залил все имаджи на [hub.docker.com](https://hub.docker.com/u/vasyakrg)
 
 ### Задание со *
+ - подключил мониторинг Mongodb, через свой контейнер с экспортером на основе [Percona](https://github.com/percona/mongodb_exporter) MongoDB Exporter
+
 ### Задание со **
 ### Задание со ***
 
