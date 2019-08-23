@@ -1,0 +1,6 @@
+project = "your_project_id"
+count_instance = "1"
+public_key = ""
+private_key = ""
+disk_image = "reddit-base"
+access_range = ["0.0.0.0/0"]

@@ -1,0 +1,6 @@
+version: '2'
+services:
+  reddit:
+    image: vasyakrg/reddit:latest
+    ports:
+      - 9292:9292

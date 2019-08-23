@@ -18,6 +18,7 @@ module "app" {
   default_user          = "${var.default_user}"
   zone_instance         = "${var.zone_instance}"
   app_disk_image_family = "${var.app_disk_image_family}"
+  disk_size             = "${var.disk_size}"
   vpc_tags              = "${var.vpc_tags}"
   access_range          = "${var.access_range}"
   allow_ports           = ["22", "9292"]
