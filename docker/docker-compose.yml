@@ -30,7 +30,7 @@ services:
       - front_net
 
   prometheus:
-    image: ${USERNAME}/prometheus
+    image: $USER_NAME/prometheus
     ports:
       - '9090:9090'
     networks:
@@ -42,6 +42,19 @@ services:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
       - '--storage.tsdb.retention=1d'
+      - '--web.enable-admin-api'
+
+  alertmanager:
+    image: $USER_NAME/alertmanager
+    environment:
+      - SLACK_TOKEN=$SLACK_TOKEN
+    # command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--log.level=debug'
+    ports:
+      - '9093:9093'
+    networks:
+      - back_net
 
   node-exporter:
       image: prom/node-exporter:v0.15.2
@@ -63,6 +76,13 @@ services:
       - MONGODB_URI=mongodb://post_db:27017
     networks:
       - back_net
+
+  blackbox-exporter:
+    image: $USER_NAME/blackbox-exporter
+    command: '--config.file=/srv/blackbox.yml'
+    networks:
+      - back_net
+      - front_net
 
 volumes:
   post_db:

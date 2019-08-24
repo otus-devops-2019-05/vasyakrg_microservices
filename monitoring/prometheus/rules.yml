@@ -1,0 +1,11 @@
+groups:
+- name: instance
+  rules:
+  - alert: ui-port
+    expr: probe_success{job="ui-port"} == 0
+    for: 5s
+    labels:
+      severity: critical
+    annotations:
+      summary: ui-port is closed
+      description: ui-port:9292 on ui-app is closed!
