@@ -9,3 +9,5 @@ variables.tf
 .terraform/
 .idea
 .env
+credentials.yml
+.docker-creds
