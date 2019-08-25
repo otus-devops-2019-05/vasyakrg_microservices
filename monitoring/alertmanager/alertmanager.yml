@@ -1,6 +1,5 @@
 global:
-  slack_api_url: "https://hooks.slack.com/services/TA3D9SFE1/BMN6GGH3J/${SLACK_TOKEN}"
-  # slack_api_url: "https://hooks.slack.com/services/TA3D9SFE1/BMN6GGH3J/"
+  slack_api_url: "https://hooks.slack.com/services/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"
 
 route:
   group_by: ['instance']

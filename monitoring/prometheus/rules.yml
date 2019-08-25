@@ -1,5 +1,5 @@
 groups:
-- name: instance
+- name: apps
   rules:
   - alert: ui-port
     expr: probe_success{job="ui-port"} == 0
@@ -9,3 +9,21 @@ groups:
     annotations:
       summary: ui-port is closed
       description: ui-port:9292 on ui-app is closed!
+
+  - alert: comment-ping
+    expr: probe_success{job="comment-ping"} == 0
+    for: 5s
+    labels:
+      severity: critical
+    annotations:
+      summary: comment-ping
+      description: comment app is not pong!
+
+  - alert: post-py-ping
+    expr: probe_success{job="post-ping"} == 0
+    for: 5s
+    labels:
+      severity: critical
+    annotations:
+      summary: post-ping
+      description: post-py is not pong!

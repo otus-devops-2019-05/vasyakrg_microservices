@@ -10,3 +10,4 @@ variables.tf
 .idea
 .env
 credentials.yml
+.docker-creds

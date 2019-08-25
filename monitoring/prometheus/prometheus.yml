@@ -26,10 +26,10 @@ scrape_configs:
   #     - targets:
   #       - 'ui:9292'
 
-  - job_name: 'comment'
-    static_configs:
-      - targets:
-        - 'comment:9292'
+  # - job_name: 'comment'
+  #   static_configs:
+  #     - targets:
+  #       - 'comment:9292'
 
   - job_name: 'node'
     static_configs:
@@ -50,6 +50,36 @@ scrape_configs:
     static_configs:
       - targets:
         - http://ui:9292
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
+
+  - job_name: 'comment-ping'
+    metrics_path: /probe
+    params:
+      module: [icmp_connect]
+    static_configs:
+      - targets:
+        - comment
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: blackbox-exporter:9115
+
+  - job_name: 'post-ping'
+    metrics_path: /probe
+    params:
+      module: [icmp_connect]
+    static_configs:
+      - targets:
+        - post
     relabel_configs:
       - source_labels: [__address__]
         target_label: __param_target

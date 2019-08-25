@@ -46,9 +46,7 @@ services:
 
   alertmanager:
     image: $USER_NAME/alertmanager
-    environment:
-      - SLACK_TOKEN=$SLACK_TOKEN
-    # command:
+    command:
       - '--config.file=/etc/alertmanager/alertmanager.yml'
       - '--log.level=debug'
     ports:
