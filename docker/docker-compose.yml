@@ -30,7 +30,7 @@ services:
       - front_net
 
   prometheus:
-    image: $USER_NAME/prometheus
+    image: ${USER_NAME}/prometheus
     ports:
       - '9090:9090'
     networks:
@@ -45,7 +45,7 @@ services:
       - '--web.enable-admin-api'
 
   alertmanager:
-    image: $USER_NAME/alertmanager
+    image: ${USER_NAME}/alertmanager
     command:
       - '--config.file=/etc/alertmanager/alertmanager.yml'
       - '--log.level=debug'
@@ -69,14 +69,14 @@ services:
         - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
 
   mongodb-exporter:
-    image: $USER_NAME/mongodb-exporter
+    image: ${USER_NAME}/mongodb-exporter
     environment:
       - MONGODB_URI=mongodb://post_db:27017
     networks:
       - back_net
 
   blackbox-exporter:
-    image: $USER_NAME/blackbox-exporter
+    image: ${USER_NAME}/blackbox-exporter
     command: '--config.file=/srv/blackbox.yml'
     networks:
       - back_net
