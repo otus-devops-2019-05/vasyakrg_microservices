@@ -4,6 +4,7 @@ APP_DIR=src
 MONITORING_DIR=monitoring
 
 APPS = comment post ui alertmanager blackbox-exporter prometheus
+APPS_MON = alertmanager blackbox-exporter prometheus
 
 COMMENT_PATH = $(APP_DIR)/comment
 POST_PATH = $(APP_DIR)/post-py
@@ -62,6 +63,12 @@ push: docker-login publish-latest publish-version ## Publish the `{version}` ans
 publish-latest: docker-login ## Publish the `latest` taged container to Docker HubDocker Hub
 	@echo 'publish latest to $(DOCKER_REPO)'
 	for app in $(APPS); do \
+		docker push $(DOCKER_REPO)/$${app}:latest; \
+	done
+
+publish-monitoring: docker-login ## Publish the 'latest' monitoring container to Docker HubDocker Hub
+	@echo 'publish latest to $(DOCKER_REPO)'
+	for app in $(APPS_MON); do \
 		docker push $(DOCKER_REPO)/$${app}:latest; \
 	done
 
