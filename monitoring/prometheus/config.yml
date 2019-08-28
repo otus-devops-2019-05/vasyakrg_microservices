@@ -6,7 +6,7 @@ global:
     monitor: 'monitoring'
 
 rule_files:
-  - rules.yml
+  - alerts.yml
 
 alerting:
   alertmanagers:
