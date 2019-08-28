@@ -19,5 +19,3 @@ receivers:
       - channel: '#prometheus'
         send_resolved: true
         username: prometheus
-        title: ":scream: {% raw %}{{ .CommonAnnotations.summary }}{% endraw %}"
-        text: "{% raw %}{{ range .Alerts }}{{ .Annotations.description }}\n{{ end }}{% endraw %}"
