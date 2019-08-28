@@ -1,3 +1,3 @@
 FROM prom/prometheus:v2.1.0
-ADD config.yml /etc/prometheus/config.yml
+ADD prometheus.yml /etc/prometheus/prometheus.yml
 ADD alerts.yml /etc/prometheus/alerts.yml
