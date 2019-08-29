@@ -67,6 +67,20 @@ services:
       - back_net
       - front_net
 
+  telegraf:
+    image: ${USER_NAME}/telegraf
+    ports:
+      - 9273:9273
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      back_net:
+        aliases:
+          - telegraf
+      front_net:
+        aliases:
+          - telegraf
+          
   grafana:
     image: grafana/grafana:5.0.0
     volumes:
@@ -84,6 +98,7 @@ services:
 volumes:
   prometheus_data:
   grafana_data:
+  influxdb-volume:
 
 networks:
   back_net:

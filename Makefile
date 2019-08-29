@@ -3,8 +3,8 @@ DOCKER_REPO_CRED=.docker-creds
 APP_DIR=src
 MONITORING_DIR=monitoring
 
-APPS = comment post ui alertmanager blackbox-exporter prometheus
-APPS_MON = alertmanager blackbox-exporter prometheus
+APPS = comment post ui alertmanager blackbox-exporter prometheus telefraf
+APPS_MON = alertmanager blackbox-exporter prometheus telegraf
 
 COMMENT_PATH = $(APP_DIR)/comment
 POST_PATH = $(APP_DIR)/post-py
@@ -24,6 +24,9 @@ BLACKBOX_EXPORTER_PATH = $(MONITORING_DIR)/blackbox-exporter
 BLACKBOX_EXPORTER_DEP = $(shell echo $(shell find $(BLACKBOX_EXPORTER_PATH) -type f))
 PROMETHEUS_PATH = $(MONITORING_DIR)/prometheus
 PROMETHEUS_DEP = $(shell echo $(shell find $(PROMETHEUS_PATH) -type f))
+TELEGRAF_PATH = $(MONITORING_DIR)/telegraf
+TELEGRAF_DEP = $(shell echo $(shell find $(TELEGRAF_PATH) -type f))
+
 
 # HELP
 # This will output the help for each task
@@ -54,6 +57,9 @@ build-prometheus: $(PROMETHEUS_DEP) ## Build prometheus image
 
 build-blackbox: $(BLACKBOX_EXPORTER_DEP) ## Build blackbox-exporter image
 	docker build -t $(DOCKER_REPO)/blackbox-exporter $(BLACKBOX_EXPORTER_PATH)
+
+build-telegraf: $(TELEGRAF_DEP) ## Build telegraf image
+	docker build -t $(DOCKER_REPO)/telegraf $(TELEGRAF_PATH)
 
 release: build push ## Make a release by building and publishing the `{version}` ans `latest` tagged containers to Docker Hub
 

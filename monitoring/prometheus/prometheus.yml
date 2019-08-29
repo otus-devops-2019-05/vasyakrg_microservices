@@ -31,6 +31,10 @@ scrape_configs:
       - targets:
         - '10.10.1.1:9323'
 
+  - job_name: 'telegraf'
+    static_configs:
+      - targets: ['telegraf:9273']
+
   - job_name: 'ui'
     static_configs:
       - targets:
