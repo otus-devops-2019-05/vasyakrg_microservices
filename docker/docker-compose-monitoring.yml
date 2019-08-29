@@ -19,7 +19,7 @@ services:
   alertmanager:
     image: ${USER_NAME}/alertmanager
     command:
-      - '--config.file=/etc/alertmanager/alertmanager.yml'
+      - '--config.file=/etc/alertmanager/config.yml'
       - '--log.level=debug'
     ports:
       - '9093:9093'
@@ -80,7 +80,7 @@ services:
       front_net:
         aliases:
           - telegraf
-          
+
   grafana:
     image: grafana/grafana:5.0.0
     volumes:
