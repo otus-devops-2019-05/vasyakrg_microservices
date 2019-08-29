@@ -5,10 +5,35 @@
   -
 
 ### Задание со *
- -
+ - расширил Makefile
+  - теперь он умеет больше:
+  ```
+    > make [command]
+
+    - help                           This help.
+    - build                          Build docker images
+    - build-comment                  Build comment image
+    - build-post                     Build post image
+    - build-ui                       Build ui image
+    - build-alertmanager             Build alertmanager image
+    - build-prometheus               Build prometheus image
+    - build-blackbox                 Build blackbox-exporter image
+
+    - release                        Make a release by building and publishing the `{version}` ans `latest` tagged containers to Docker Hub
+
+    - push                           Publish the `{version}` ans `latest` tagged containers to Docker Hub
+    - publish-latest                 Publish the `latest` taged container to Docker HubDocker Hub
+    - publish-monitoring             Publish the 'latest' monitoring container to Docker HubDocker Hub
+    - publish-version                Publish the `{version}` taged container to Docker Hub
+    - tag                            Generate container tag
+
+    - docker-login                   Login to Docker Hub
+  ```
+  - Прометей теперь собирает в том числе и экспериментальные метрики самого докера с '10.10.1.1:9323', а Графана рисует графики
+  - 
 
 ### Задание со **
-  - 
+  -
 
 ### Задание со ***  
 

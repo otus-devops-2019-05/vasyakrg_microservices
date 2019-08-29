@@ -14,9 +14,9 @@ COMMENT_DEP = $(shell echo $(shell find $(COMMENT_PATH) -type f))
 POST_DEP = $(shell echo $(shell find $(POST_PATH) -type f))
 UI_DEP = $(shell echo $(shell find $(UI_PATH) -type f))
 
-COMMENT_VERSION = $(shell head -n 1 $(COMMENT_PATH)/ver)
-POST_VERSION = $(shell head -n 1 $(POST_PATH)/ver)
-UI_VERSION = $(shell head -n 1 $(UI_PATH)/ver)
+COMMENT_VERSION = $(shell head -n 1 $(COMMENT_PATH)/VERSION)
+POST_VERSION = $(shell head -n 1 $(POST_PATH)/VERSION)
+UI_VERSION = $(shell head -n 1 $(UI_PATH)/VERSION)
 
 ALERTMANAGER_PATH = $(MONITORING_DIR)/alertmanager
 ALERTMANAGER_DEP = $(shell echo $(shell find $(ALERTMANAGER_PATH) -type f))

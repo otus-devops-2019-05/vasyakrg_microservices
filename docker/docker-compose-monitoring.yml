@@ -2,6 +2,7 @@ version: '3.3'
 services:
   prometheus:
     image: ${USER_NAME}/prometheus
+    privileged: true
     ports:
       - '9090:9090'
     networks:

@@ -26,6 +26,11 @@ scrape_configs:
       - targets:
         - 'cadvisor:8080'
 
+  - job_name: 'docker-metrics'
+    static_configs:
+      - targets:
+        - '10.10.1.1:9323'
+
   - job_name: 'ui'
     static_configs:
       - targets:
