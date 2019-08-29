@@ -38,7 +38,9 @@ help: ## This help.
 
 # DOCKER
 # Build images
-build: build-comment build-post build-ui build-alertmanager build-blackbox build-prometheus ## Build docker images
+build: build-comment build-post build-ui build-alertmanager build-blackbox build-prometheus build-telegraf ## Build docker images
+
+build-monitoring: build-alertmanager build-blackbox build-prometheus build-telegraf
 
 build-comment: $(COMMENT_DEP) ## Build comment image
 	docker build -t $(DOCKER_REPO)/comment $(COMMENT_PATH)
