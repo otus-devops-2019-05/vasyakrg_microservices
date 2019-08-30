@@ -4,7 +4,7 @@ services:
     image: ${USER_NAME}/prometheus
     privileged: true
     ports:
-      - '9090:9090'
+      - 9090:9090
     networks:
       - back_net
       - front_net
@@ -15,6 +15,14 @@ services:
       - '--storage.tsdb.path=/prometheus'
       - '--storage.tsdb.retention=1d'
       - '--web.enable-admin-api'
+
+  trickster:
+    image: ${USER_NAME}/trickster
+    ports:
+      - 9089:9089
+      - 8082:8082
+    networks:
+      - back_net
 
   alertmanager:
     image: ${USER_NAME}/alertmanager

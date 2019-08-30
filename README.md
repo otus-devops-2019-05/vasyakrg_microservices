@@ -39,9 +39,9 @@
     > curl -sSO https://dl.google.com/cloudagents/install-monitoring-agent.sh && sudo bash install-monitoring-agent.sh
     > curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh && sudo bash install-logging-agent.sh
 
-  - 
-
 ### Задание со ***  
+  - Переключил Графану на получение данных с прокси Trickster, который в свою очередь берет данные с Прометея (судя по результатам добавленного в Графану дашборда Trickster - жить стало веселее)
+
 
 
 ## HW4

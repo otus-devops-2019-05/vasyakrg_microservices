@@ -3,8 +3,8 @@ DOCKER_REPO_CRED=.docker-creds
 APP_DIR=src
 MONITORING_DIR=monitoring
 
-APPS = comment post ui alertmanager blackbox-exporter prometheus telefraf grafana
-APPS_MON = alertmanager blackbox-exporter prometheus telegraf grafana
+APPS = comment post ui alertmanager blackbox-exporter prometheus telefraf grafana trickster
+APPS_MON = alertmanager blackbox-exporter prometheus telegraf grafana trickster
 
 COMMENT_PATH = $(APP_DIR)/comment
 POST_PATH = $(APP_DIR)/post-py
@@ -28,7 +28,8 @@ TELEGRAF_PATH = $(MONITORING_DIR)/telegraf
 TELEGRAF_DEP = $(shell echo $(shell find $(TELEGRAF_PATH) -type f))
 GRAFANA_PATH = $(MONITORING_DIR)/grafana
 GRAFANA_DEP = $(shell echo $(shell find $(GRAFANA_PATH) -type f))
-
+TRICKSTER_PATH = $(MONITORING_DIR)/trickster
+TRICKSTER_DEP = $(shell echo $(shell find $(TRICKSTER_PATH) -type f))
 
 # HELP
 # This will output the help for each task
@@ -40,9 +41,9 @@ help: ## This help.
 
 # DOCKER
 # Build images
-build: build-comment build-post build-ui build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana ## Build docker images
+build: build-comment build-post build-ui build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana build-trickster ## Build docker images
 
-build-monitoring: build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana
+build-monitoring: build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana build-trickster
 
 build-comment: $(COMMENT_DEP) ## Build comment image
 	docker build -t $(DOCKER_REPO)/comment $(COMMENT_PATH)
@@ -67,6 +68,9 @@ build-telegraf: $(TELEGRAF_DEP) ## Build telegraf image
 
 build-grafana: $(GRAFANA_DEP) ## Build grafana image
 	docker build -t $(DOCKER_REPO)/grafana $(GRAFANA_PATH)
+
+build-trickster: $(TRICKSTER_DEP) ## Build grafana image
+	docker build -t $(DOCKER_REPO)/trickster $(TRICKSTER_PATH)
 
 release: build push ## Make a release by building and publishing the `{version}` ans `latest` tagged containers to Docker Hub
 

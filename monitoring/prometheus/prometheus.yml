@@ -62,6 +62,13 @@ scrape_configs:
       - targets:
         - 'mongodb-exporter:9216'
 
+  - job_name: 'trickster'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+    static_configs:
+      - targets:
+        - 'trickster:8082'
+
   - job_name: 'ui-port'
     metrics_path: /probe
     params:
