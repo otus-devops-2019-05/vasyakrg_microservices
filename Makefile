@@ -3,8 +3,8 @@ DOCKER_REPO_CRED=.docker-creds
 APP_DIR=src
 MONITORING_DIR=monitoring
 
-APPS = comment post ui alertmanager blackbox-exporter prometheus telefraf grafana trickster autoheal
-APPS_MON = alertmanager blackbox-exporter prometheus telegraf grafana trickster autoheal
+APPS = comment post ui alertmanager blackbox-exporter prometheus telefraf grafana trickster
+APPS_MON = alertmanager blackbox-exporter prometheus telegraf grafana trickster
 
 COMMENT_PATH = $(APP_DIR)/comment
 POST_PATH = $(APP_DIR)/post-py
@@ -30,9 +30,6 @@ GRAFANA_PATH = $(MONITORING_DIR)/grafana
 GRAFANA_DEP = $(shell echo $(shell find $(GRAFANA_PATH) -type f))
 TRICKSTER_PATH = $(MONITORING_DIR)/trickster
 TRICKSTER_DEP = $(shell echo $(shell find $(TRICKSTER_PATH) -type f))
-AUTOHEAL_PATH = $(MONITORING_DIR)/autoheal
-AUTOHEAL_DEP = $(shell echo $(shell find $(AUTOHEAL_PATH) -type f))
-
 
 # HELP
 # This will output the help for each task
@@ -44,9 +41,9 @@ help: ## This help.
 
 # DOCKER
 # Build images
-build: build-comment build-post build-ui build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana build-trickster build-autoheal## Build docker images
+build: build-comment build-post build-ui build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana build-trickster## Build docker images
 
-build-monitoring: build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana build-trickster build-autoheal
+build-monitoring: build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana build-trickster
 
 build-comment: $(COMMENT_DEP) ## Build comment image
 	docker build -t $(DOCKER_REPO)/comment $(COMMENT_PATH)
@@ -74,9 +71,6 @@ build-grafana: $(GRAFANA_DEP) ## Build grafana image
 
 build-trickster: $(TRICKSTER_DEP) ## Build trickster image
 	docker build -t $(DOCKER_REPO)/trickster $(TRICKSTER_PATH)
-
-build-autoheal: $(AUTOHEAL_DEP) ## Build autoheal image
-	docker build -t $(DOCKER_REPO)/autoheal $(AUTOHEAL_PATH)
 
 release: build push ## Make a release by building and publishing the `{version}` ans `latest` tagged containers to Docker Hub
 
