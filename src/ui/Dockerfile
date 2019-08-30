@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 RUN apt-get update \
-    && apt-get install -y ruby-full ruby-dev build-essential \
+    && apt-get install -y ruby-full ruby-dev build-essential curl \
     && gem install bundler --no-ri --no-rdoc
 
 ENV APP_HOME /app

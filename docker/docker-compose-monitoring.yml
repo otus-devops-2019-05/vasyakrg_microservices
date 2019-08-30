@@ -1,0 +1,128 @@
+version: '3.3'
+services:
+  prometheus:
+    image: ${USER_NAME}/prometheus
+    privileged: true
+    ports:
+      - 9090:9090
+    networks:
+      - back_net
+      - front_net
+    volumes:
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention=1d'
+      - '--web.enable-admin-api'
+
+  trickster:
+    image: ${USER_NAME}/trickster
+    ports:
+      - 9089:9089
+      - 8082:8082
+    networks:
+      - back_net
+
+  alertmanager:
+    image: ${USER_NAME}/alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--log.level=debug'
+    ports:
+      - '9093:9093'
+    networks:
+      - back_net
+
+  autoheal:
+    image: willfarrell/autoheal
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=${UI_MON}
+    networks:
+      - back_net
+
+  node-exporter:
+    image: prom/node-exporter:v0.15.2
+    user: root
+    networks:
+      - back_net
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points="^/(sys|proc|dev|host|etc)($$|/)"'
+
+  mongodb-exporter:
+    image: ${USER_NAME}/mongodb-exporter
+    environment:
+      - MONGODB_URI=mongodb://post_db:27017
+    networks:
+      - back_net
+
+  blackbox-exporter:
+    image: ${USER_NAME}/blackbox-exporter
+    command: '--config.file=/srv/blackbox.yml'
+    networks:
+      - back_net
+      - front_net
+
+  cadvisor:
+    image: google/cadvisor:v0.29.0
+    volumes:
+      - '/:/rootfs:ro'
+      - '/var/run:/var/run:rw'
+      - '/sys:/sys:ro'
+      - '/var/lib/docker/:/var/lib/docker:ro'
+    ports:
+      - '8080:8080'
+    networks:
+      - back_net
+      - front_net
+
+  telegraf:
+    image: ${USER_NAME}/telegraf
+    ports:
+      - 9273:9273
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      back_net:
+        aliases:
+          - telegraf
+      front_net:
+        aliases:
+          - telegraf
+
+  grafana:
+    image: ${USER_NAME}/grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=secret
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    networks:
+      - back_net
+
+volumes:
+  prometheus_data:
+  grafana_data:
+  influxdb-volume:
+
+networks:
+  back_net:
+    ipam:
+      config:
+        - subnet: "10.10.1.0/24"
+  front_net:
+    ipam:
+      config:
+        - subnet: "10.10.2.0/24"

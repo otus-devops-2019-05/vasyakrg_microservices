@@ -1,6 +1,57 @@
 # vasyakrg_microservices
 [![Build Status](https://travis-ci.com/otus-devops-2019-05/vasyakrg_microservices.svg?branch=master)](https://travis-ci.com/otus-devops-2019-05/vasyakrg_microservices)
 
+## HW5
+  -
+
+### Задание со *
+ - расширил Makefile
+  - теперь он умеет больше:
+  ```
+    > make [command]
+
+    - help                           This help.
+    - build                          Build docker images
+    - build-comment                  Build comment image
+    - build-post                     Build post image
+    - build-ui                       Build ui image
+    - build-alertmanager             Build alertmanager image
+    - build-prometheus               Build prometheus image
+    - build-blackbox                 Build blackbox-exporter image
+
+    - release                        Make a release by building and publishing the `{version}` ans `latest` tagged containers to Docker Hub
+
+    - push                           Publish the `{version}` ans `latest` tagged containers to Docker Hub
+    - publish-latest                 Publish the `latest` taged container to Docker HubDocker Hub
+    - publish-monitoring             Publish the 'latest' monitoring container to Docker HubDocker Hub
+    - publish-version                Publish the `{version}` taged container to Docker Hub
+    - tag                            Generate container tag
+
+    - docker-login                   Login to Docker Hub
+  ```
+  - Прометей теперь собирает в том числе и экспериментальные метрики самого докера с '10.10.1.1:9323', а Графана рисует графики
+  - Прометей через сервис Telegraf опрашивает docker-host (минимально), а Графана рисует графики
+  - Alertmanager, теперь так же отправляет сообщения на почту, так же на severity: critical
+
+### Задание со **
+  - Реализовал автоматическое добавление источника данных и созданных в данном ДЗ дашбордов в графану
+  - к docker-host подключил StackDriver, вытащил кучу метрик по CPU, MEM, Disk и прочему
+    > curl -sSO https://dl.google.com/cloudagents/install-monitoring-agent.sh && sudo bash install-monitoring-agent.sh
+    > curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh && sudo bash install-logging-agent.sh
+
+### Задание со ***  
+  - Переключил Графану на получение данных с прокси Trickster, который в свою очередь берет данные с Прометея (судя по результатам добавленного в Графану дашборда Trickster - жить стало веселее)
+  -   - подключил фунционал healthcheck в контейнер ui, что бы отслеживать состояние порта (приложения)
+      ```
+      healthcheck:
+        test: curl -sS http://127.0.0.1:9292 || exit 1
+        interval: 20s
+        timeout: 3s
+        retries: 1
+      ```
+  - подключил отдельный контейнер krg_autoheal_1, задача которого, тестировать другие контейрены на состояние unhealthy и перезапускать их
+
+
 ## HW4
  - поднял контейнер с прометеем, поигрался с графиками, паданием сервисов
  - поднял нод-экспортер, пробросил его в сеть с прометеем, положил CPU с докер-хоста :)

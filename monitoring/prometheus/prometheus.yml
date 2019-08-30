@@ -1,12 +1,12 @@
 ---
 global:
-  scrape_interval:     15s
+  scrape_interval:     5s
   evaluation_interval: 15s
   external_labels:
     monitor: 'monitoring'
 
 rule_files:
-  - rules.yml
+  - alerts.yml
 
 alerting:
   alertmanagers:
@@ -21,15 +21,34 @@ scrape_configs:
       - targets:
         - 'localhost:9090'
 
-  # - job_name: 'ui'
-  #   static_configs:
-  #     - targets:
-  #       - 'ui:9292'
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets:
+        - 'cadvisor:8080'
 
-  # - job_name: 'comment'
-  #   static_configs:
-  #     - targets:
-  #       - 'comment:9292'
+  - job_name: 'docker-metrics'
+    static_configs:
+      - targets:
+        - '10.10.1.1:9323'
+
+  - job_name: 'telegraf'
+    static_configs:
+      - targets: ['telegraf:9273']
+
+  - job_name: 'ui'
+    static_configs:
+      - targets:
+        - 'ui:9292'
+
+  - job_name: 'comment'
+    static_configs:
+      - targets:
+        - 'comment:9292'
+
+  - job_name: 'post'
+    static_configs:
+      - targets:
+        - 'post:5000'
 
   - job_name: 'node'
     static_configs:
@@ -42,6 +61,13 @@ scrape_configs:
     static_configs:
       - targets:
         - 'mongodb-exporter:9216'
+
+  - job_name: 'trickster'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+    static_configs:
+      - targets:
+        - 'trickster:8082'
 
   - job_name: 'ui-port'
     metrics_path: /probe

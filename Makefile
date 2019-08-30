@@ -3,7 +3,8 @@ DOCKER_REPO_CRED=.docker-creds
 APP_DIR=src
 MONITORING_DIR=monitoring
 
-APPS = comment post ui alertmanager blackbox-exporter prometheus
+APPS = comment post ui alertmanager blackbox-exporter prometheus telefraf grafana trickster
+APPS_MON = alertmanager blackbox-exporter prometheus telegraf grafana trickster
 
 COMMENT_PATH = $(APP_DIR)/comment
 POST_PATH = $(APP_DIR)/post-py
@@ -13,9 +14,9 @@ COMMENT_DEP = $(shell echo $(shell find $(COMMENT_PATH) -type f))
 POST_DEP = $(shell echo $(shell find $(POST_PATH) -type f))
 UI_DEP = $(shell echo $(shell find $(UI_PATH) -type f))
 
-COMMENT_VERSION = $(shell head -n 1 $(COMMENT_PATH)/ver)
-POST_VERSION = $(shell head -n 1 $(POST_PATH)/ver)
-UI_VERSION = $(shell head -n 1 $(UI_PATH)/ver)
+COMMENT_VERSION = $(shell head -n 1 $(COMMENT_PATH)/VERSION)
+POST_VERSION = $(shell head -n 1 $(POST_PATH)/VERSION)
+UI_VERSION = $(shell head -n 1 $(UI_PATH)/VERSION)
 
 ALERTMANAGER_PATH = $(MONITORING_DIR)/alertmanager
 ALERTMANAGER_DEP = $(shell echo $(shell find $(ALERTMANAGER_PATH) -type f))
@@ -23,6 +24,12 @@ BLACKBOX_EXPORTER_PATH = $(MONITORING_DIR)/blackbox-exporter
 BLACKBOX_EXPORTER_DEP = $(shell echo $(shell find $(BLACKBOX_EXPORTER_PATH) -type f))
 PROMETHEUS_PATH = $(MONITORING_DIR)/prometheus
 PROMETHEUS_DEP = $(shell echo $(shell find $(PROMETHEUS_PATH) -type f))
+TELEGRAF_PATH = $(MONITORING_DIR)/telegraf
+TELEGRAF_DEP = $(shell echo $(shell find $(TELEGRAF_PATH) -type f))
+GRAFANA_PATH = $(MONITORING_DIR)/grafana
+GRAFANA_DEP = $(shell echo $(shell find $(GRAFANA_PATH) -type f))
+TRICKSTER_PATH = $(MONITORING_DIR)/trickster
+TRICKSTER_DEP = $(shell echo $(shell find $(TRICKSTER_PATH) -type f))
 
 # HELP
 # This will output the help for each task
@@ -34,7 +41,9 @@ help: ## This help.
 
 # DOCKER
 # Build images
-build: build-comment build-post build-ui build-alertmanager build-blackbox build-prometheus ## Build docker images
+build: build-comment build-post build-ui build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana build-trickster## Build docker images
+
+build-monitoring: build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana build-trickster
 
 build-comment: $(COMMENT_DEP) ## Build comment image
 	docker build -t $(DOCKER_REPO)/comment $(COMMENT_PATH)
@@ -54,6 +63,15 @@ build-prometheus: $(PROMETHEUS_DEP) ## Build prometheus image
 build-blackbox: $(BLACKBOX_EXPORTER_DEP) ## Build blackbox-exporter image
 	docker build -t $(DOCKER_REPO)/blackbox-exporter $(BLACKBOX_EXPORTER_PATH)
 
+build-telegraf: $(TELEGRAF_DEP) ## Build telegraf image
+	docker build -t $(DOCKER_REPO)/telegraf $(TELEGRAF_PATH)
+
+build-grafana: $(GRAFANA_DEP) ## Build grafana image
+	docker build -t $(DOCKER_REPO)/grafana $(GRAFANA_PATH)
+
+build-trickster: $(TRICKSTER_DEP) ## Build trickster image
+	docker build -t $(DOCKER_REPO)/trickster $(TRICKSTER_PATH)
+
 release: build push ## Make a release by building and publishing the `{version}` ans `latest` tagged containers to Docker Hub
 
 # Docker push
@@ -62,6 +80,12 @@ push: docker-login publish-latest publish-version ## Publish the `{version}` ans
 publish-latest: docker-login ## Publish the `latest` taged container to Docker HubDocker Hub
 	@echo 'publish latest to $(DOCKER_REPO)'
 	for app in $(APPS); do \
+		docker push $(DOCKER_REPO)/$${app}:latest; \
+	done
+
+publish-monitoring: docker-login ## Publish the 'latest' monitoring container to Docker HubDocker Hub
+	@echo 'publish latest to $(DOCKER_REPO)'
+	for app in $(APPS_MON); do \
 		docker push $(DOCKER_REPO)/$${app}:latest; \
 	done
 

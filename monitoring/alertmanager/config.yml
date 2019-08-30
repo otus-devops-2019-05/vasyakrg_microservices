@@ -1,10 +1,15 @@
 global:
   slack_api_url: "https://hooks.slack.com/services/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"
+  smtp_smarthost: 'smtp.amegaserver.com:25'
+  smtp_from: <Alertmanager> 'test@amegaserver.com'
+  smtp_auth_username: 'test@amegaserver.com'
+  smtp_auth_password: 'Y9o5Q3n8'
+  smtp_require_tls: false
 
 route:
   group_by: ['instance']
-  group_wait: 30s
-  group_interval: 1m
+  group_wait: 10s
+  group_interval: 30s
   repeat_interval: 1h
   receiver: slack-notifications
 
@@ -13,11 +18,18 @@ route:
       severity: critical
     receiver: slack-notifications
 
+  - match:
+      severity: critical
+    receiver: email
+
 receivers:
   - name: slack-notifications
     slack_configs:
       - channel: '#prometheus'
         send_resolved: true
         username: prometheus
-        title: ":scream: {% raw %}{{ .CommonAnnotations.summary }}{% endraw %}"
-        text: "{% raw %}{{ range .Alerts }}{{ .Annotations.description }}\n{{ end }}{% endraw %}"
+
+  - name: email
+    email_configs:
+      - to: 'test@amegaserver.com'
+        send_resolved: true
