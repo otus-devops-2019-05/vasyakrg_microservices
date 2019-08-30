@@ -17,7 +17,6 @@
   "editable": true,
   "gnetId": 1229,
   "graphTooltip": 0,
-  "id": 4,
   "iteration": 1567046270263,
   "links": [],
   "panels": [
@@ -54,7 +53,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(50, 172, 45, 0.97)"
       ],
-      "datasource": "Promet",
+      "datasource": "Prometheus",
       "description": "Number of CPUs",
       "format": "none",
       "gauge": {
@@ -141,7 +140,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Promet",
+      "datasource": "Prometheus",
       "description": "Measuring some percentiles performance",
       "fill": 1,
       "gridPos": {
@@ -254,7 +253,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Promet",
+      "datasource": "Prometheus",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -345,7 +344,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Promet",
+      "datasource": "Prometheus",
       "description": "Measuring some percentiles performance",
       "fill": 1,
       "gridPos": {
@@ -458,7 +457,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Promet",
+      "datasource": "Prometheus",
       "fill": 1,
       "gridPos": {
         "h": 7,
@@ -549,7 +548,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Promet",
+      "datasource": "Prometheus",
       "description": "Measuring histogram on some percentile",
       "fill": 1,
       "gridPos": {
@@ -662,7 +661,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Promet",
+      "datasource": "Prometheus",
       "decimals": 0,
       "fill": 1,
       "gridPos": {
@@ -752,7 +751,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Promet",
+      "datasource": "Prometheus",
       "decimals": 0,
       "fill": 1,
       "gridPos": {
@@ -960,7 +959,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "Promet",
+        "datasource": "Prometheus",
         "hide": 0,
         "includeAll": true,
         "label": "Instance",

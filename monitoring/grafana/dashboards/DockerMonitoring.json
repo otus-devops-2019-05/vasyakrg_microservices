@@ -41,7 +41,6 @@
       "version": "1.0.0"
     }
   ],
-  "id": null,
   "title": "Docker and system monitoring",
   "description": "A simple overview of the most important Docker host and container metrics. (cAdvisor/Prometheus)",
   "tags": [],
@@ -84,7 +83,7 @@
       {
         "allValue": ".+",
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": "Prometheus",
         "hide": 0,
         "includeAll": true,
         "label": "Container Group",
@@ -202,7 +201,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": "Prometheus",
         "hide": 0,
         "includeAll": false,
         "label": "Node",
@@ -240,7 +239,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "decimals": 0,
           "editable": true,
           "error": false,
@@ -320,7 +319,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "format": "none",
@@ -396,7 +395,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "decimals": 1,
           "editable": true,
           "error": false,
@@ -474,7 +473,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "decimals": 0,
           "editable": true,
           "error": false,
@@ -551,7 +550,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(245, 54, 54, 0.9)"
           ],
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "decimals": 0,
           "editable": true,
           "error": false,
@@ -629,7 +628,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "decimals": 0,
           "editable": true,
           "error": false,
@@ -714,7 +713,7 @@
             "SENT": "#BF1B00"
           },
           "bars": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -800,7 +799,7 @@
             "{id=\"/\",instance=\"cadvisor:8080\",job=\"prometheus\"}": "#BA43A9"
           },
           "bars": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -911,43 +910,9 @@
           ]
         },
         {
-          "alert": {
-            "conditions": [
-              {
-                "evaluator": {
-                  "params": [
-                    1.25
-                  ],
-                  "type": "gt"
-                },
-                "query": {
-                  "params": [
-                    "A",
-                    "5m",
-                    "now"
-                  ]
-                },
-                "reducer": {
-                  "params": [],
-                  "type": "avg"
-                },
-                "type": "query"
-              }
-            ],
-            "executionErrorState": "alerting",
-            "frequency": "60s",
-            "handler": 1,
-            "name": "Panel Title alert",
-            "noDataState": "keep_state",
-            "notifications": [
-              {
-                "id": 1
-              }
-            ]
-          },
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "decimals": 0,
           "editable": true,
           "error": false,
@@ -1027,40 +992,6 @@
           ]
         },
         {
-          "alert": {
-            "conditions": [
-              {
-                "evaluator": {
-                  "params": [
-                    850000000000
-                  ],
-                  "type": "gt"
-                },
-                "query": {
-                  "params": [
-                    "A",
-                    "5m",
-                    "now"
-                  ]
-                },
-                "reducer": {
-                  "params": [],
-                  "type": "avg"
-                },
-                "type": "query"
-              }
-            ],
-            "executionErrorState": "alerting",
-            "frequency": "60s",
-            "handler": 1,
-            "name": "Free/Used Disk Space alert",
-            "noDataState": "keep_state",
-            "notifications": [
-              {
-                "id": 1
-              }
-            ]
-          },
           "aliasColors": {
             "Belegete Festplatte": "#BF1B00",
             "Free Disk Space": "#7EB26D",
@@ -1068,7 +999,7 @@
             "{}": "#BF1B00"
           },
           "bars": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -1155,46 +1086,12 @@
           ]
         },
         {
-          "alert": {
-            "conditions": [
-              {
-                "evaluator": {
-                  "params": [
-                    10000000000
-                  ],
-                  "type": "gt"
-                },
-                "query": {
-                  "params": [
-                    "A",
-                    "5m",
-                    "now"
-                  ]
-                },
-                "reducer": {
-                  "params": [],
-                  "type": "avg"
-                },
-                "type": "query"
-              }
-            ],
-            "executionErrorState": "alerting",
-            "frequency": "60s",
-            "handler": 1,
-            "name": "Available Memory alert",
-            "noDataState": "keep_state",
-            "notifications": [
-              {
-                "id": 1
-              }
-            ]
-          },
           "aliasColors": {
             "Available Memory": "#7EB26D",
             "Unavailable Memory": "#7EB26D"
           },
           "bars": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -1401,7 +1298,7 @@
             "OUT on /sda": "#890F02"
           },
           "bars": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -1498,7 +1395,7 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -1584,7 +1481,7 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "fill": 1,
@@ -1684,7 +1581,7 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "fill": 5,
@@ -1775,7 +1672,7 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "fill": 3,
@@ -1861,7 +1758,7 @@
         {
           "aliasColors": {},
           "bars": false,
-          "datasource": "${DS_PROMETHEUS}",
+          "datasource": "Prometheus",
           "editable": true,
           "error": false,
           "fill": 3,
