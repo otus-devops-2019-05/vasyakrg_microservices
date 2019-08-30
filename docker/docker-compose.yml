@@ -16,6 +16,12 @@ services:
       - ${UI_PORT}:${UI_PORT}/tcp
     networks:
       - front_net
+    healthcheck:
+      test: curl -sS http://127.0.0.1:9292 || exit 1
+      interval: 20s
+      timeout: 3s
+      retries: 1
+
   post:
     # build: ./post-py
     image: ${USER_NAME}/post:latest

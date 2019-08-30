@@ -34,6 +34,15 @@ services:
     networks:
       - back_net
 
+  autoheal:
+    image: willfarrell/autoheal
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+    environment:
+      - AUTOHEAL_CONTAINER_LABEL=${UI_MON}
+    networks:
+      - back_net
+
   node-exporter:
     image: prom/node-exporter:v0.15.2
     user: root
