@@ -2,11 +2,13 @@ DOCKER_REPO=vasyakrg
 DOCKER_REPO_CRED=.docker-creds
 APP_DIR=src
 MONITORING_DIR=monitoring
+LOGGING_DIR=logging
 
 EXT_TAG=logging
 
 APPS = comment post ui alertmanager blackbox-exporter prometheus telefraf grafana trickster
 APPS_MON = alertmanager blackbox-exporter prometheus telegraf grafana trickster
+APPS_LOG = fluentd
 
 COMMENT_PATH = $(APP_DIR)/comment
 POST_PATH = $(APP_DIR)/post-py
@@ -33,6 +35,9 @@ GRAFANA_DEP = $(shell echo $(shell find $(GRAFANA_PATH) -type f))
 TRICKSTER_PATH = $(MONITORING_DIR)/trickster
 TRICKSTER_DEP = $(shell echo $(shell find $(TRICKSTER_PATH) -type f))
 
+FLUENTD_PATH = $(LOGGING_DIR)/fluentd
+FLUENTD_DEP = $(shell echo $(shell find $(FLUENTD_PATH) -type f))
+
 # HELP
 # This will output the help for each task
 .PHONY: help
@@ -43,11 +48,13 @@ help: ## This help.
 
 # DOCKER
 # Build images
-build: build-comment build-post build-ui build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana build-trickster ## Build all docker images
+build: build-comment build-post build-ui build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana build-trickster build-fluentd ## Build all docker images
 
 build-apps: build-comment build-post build-ui ## Build apps-docker images
 
 build-monitoring: build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana build-trickster ## Build minitoring-docker images
+
+build-logging: build-fluentd ## Build logging-docker images
 
 build-comment: $(COMMENT_DEP) ## Build comment image
 	docker build -t $(DOCKER_REPO)/comment $(COMMENT_PATH)
@@ -76,6 +83,9 @@ build-grafana: $(GRAFANA_DEP) ## Build grafana image
 build-trickster: $(TRICKSTER_DEP) ## Build trickster image
 	docker build -t $(DOCKER_REPO)/trickster $(TRICKSTER_PATH)
 
+build-fluentd: $(FLUENTD_DEP) ## Build fluentd image
+	docker build -t $(DOCKER_REPO)/fluentd $(FLUENTD_PATH)
+
 release: build push ## Make a release by building and publishing the `{version}` ans `latest` tagged containers to Docker Hub
 
 # Docker push
@@ -87,19 +97,25 @@ publish-latest: docker-login ## Publish the `latest` taged container to Docker H
 		docker push $(DOCKER_REPO)/$${app}:latest; \
 	done
 
-publish-monitoring: docker-login ## Publish the 'latest' monitoring container to Docker HubDocker Hub
+publish-monitoring: docker-login ## Publish the 'latest' monitoring container to DockerHub
 	@echo 'publish latest to $(DOCKER_REPO)'
 	for app in $(APPS_MON); do \
 		docker push $(DOCKER_REPO)/$${app}:latest; \
 	done
 
-publish-version: docker-login tag ## Publish the `{version}` taged container to Docker Hub
+publish-logging: docker-login ## Publish the 'latest' logging container to DockerHub
+	@echo 'publish latest to $(DOCKER_REPO)'
+	for app in $(APPS_LOG); do \
+		docker push $(DOCKER_REPO)/$${app}:latest; \
+	done
+
+publish-version: docker-login tag ## Publish the `{version}` taged container to DockerHub
 	@echo 'publish $(VERSION) to $(DOCKER_REPO)'
 	docker push $(DOCKER_REPO)/comment:$(COMMENT_VERSION)
 	docker push $(DOCKER_REPO)/post:$(POST_VERSION)
 	docker push $(DOCKER_REPO)/ui:$(UI_VERSION)
 
-publish-ext-version: docker-login ext-tag ## Publish the `{EXT_TAG}` taged container to Docker Hub
+publish-ext-version: docker-login ext-tag ## Publish the `{EXT_TAG}` taged container to DockerHub
 	@echo 'publish $(EXT_TAG) to $(DOCKER_REPO)'
 	docker push $(DOCKER_REPO)/comment:$(EXT_TAG)
 	docker push $(DOCKER_REPO)/post:$(EXT_TAG)
