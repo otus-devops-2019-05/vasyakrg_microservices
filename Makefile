@@ -3,6 +3,8 @@ DOCKER_REPO_CRED=.docker-creds
 APP_DIR=src
 MONITORING_DIR=monitoring
 
+EXT_TAG=logging
+
 APPS = comment post ui alertmanager blackbox-exporter prometheus telefraf grafana trickster
 APPS_MON = alertmanager blackbox-exporter prometheus telegraf grafana trickster
 
@@ -41,9 +43,11 @@ help: ## This help.
 
 # DOCKER
 # Build images
-build: build-comment build-post build-ui build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana build-trickster## Build docker images
+build: build-comment build-post build-ui build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana build-trickster ## Build all docker images
 
-build-monitoring: build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana build-trickster
+build-apps: build-comment build-post build-ui ## Build apps-docker images
+
+build-monitoring: build-alertmanager build-blackbox build-prometheus build-telegraf build-grafana build-trickster ## Build minitoring-docker images
 
 build-comment: $(COMMENT_DEP) ## Build comment image
 	docker build -t $(DOCKER_REPO)/comment $(COMMENT_PATH)
@@ -95,6 +99,13 @@ publish-version: docker-login tag ## Publish the `{version}` taged container to 
 	docker push $(DOCKER_REPO)/post:$(POST_VERSION)
 	docker push $(DOCKER_REPO)/ui:$(UI_VERSION)
 
+publish-ext-version: docker-login ext-tag ## Publish the `{EXT_TAG}` taged container to Docker Hub
+	@echo 'publish $(EXT_TAG) to $(DOCKER_REPO)'
+	docker push $(DOCKER_REPO)/comment:$(EXT_TAG)
+	docker push $(DOCKER_REPO)/post:$(EXT_TAG)
+	docker push $(DOCKER_REPO)/ui:$(EXT_TAG)
+
+
 tag: ## Generate container tag
 	@echo 'create comment tag $(COMMENT_VERSION)'
 	docker tag $(DOCKER_REPO)/comment $(DOCKER_REPO)/comment:$(COMMENT_VERSION)
@@ -102,6 +113,14 @@ tag: ## Generate container tag
 	docker tag $(DOCKER_REPO)/post $(DOCKER_REPO)/post:$(POST_VERSION)
 	@echo 'create ui tag $(UI_VERSION)'
 	docker tag $(DOCKER_REPO)/ui $(DOCKER_REPO)/ui:$(UI_VERSION)
+
+ext-tag: ## Generate container external-tag
+	@echo 'create comment tag $(EXT_TAG)'
+	docker tag $(DOCKER_REPO)/comment $(DOCKER_REPO)/comment:$(EXT_TAG)
+	@echo 'create post tag $(EXT_TAG)'
+	docker tag $(DOCKER_REPO)/post $(DOCKER_REPO)/post:$(EXT_TAG)
+	@echo 'create ui tag $(EXT_TAG)'
+	docker tag $(DOCKER_REPO)/ui $(DOCKER_REPO)/ui:$(EXT_TAG)
 
 
 # Login to Docker Hub
