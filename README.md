@@ -2,9 +2,14 @@
 [![Build Status](https://travis-ci.com/otus-devops-2019-05/vasyakrg_microservices.svg?branch=master)](https://travis-ci.com/otus-devops-2019-05/vasyakrg_microservices)
 
 ## HW6
-  -
+  - Сбор неструктурированных логов
+  - Визуализация логов
+  - Сбор структурированных логов
+  - Распределенная трасировка
 
 ### Задание со *  
+  - Составил grok-паттернр в конфигурации fluentd так, чтобы разбирались оба формата логов UI-сервиса (тот, что сделали до этого и текущий) одновременно.
+  - 
 
 ## HW5
 
