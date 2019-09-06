@@ -139,7 +139,7 @@ ext-tag: ## Generate container external-tag
 	@echo 'create ui tag $(EXT_TAG)'
 	docker tag $(DOCKER_REPO)/ui $(DOCKER_REPO)/ui:$(EXT_TAG)
 
-break-tag: ## Generate container external-tag
+break-tag: ## Generate container break-tag
 	@echo 'create comment tag $(EXT_TAG)'
 	docker tag $(DOCKER_REPO)/comment $(DOCKER_REPO)/comment:$(BREAK_TAG)
 	@echo 'create post tag $(EXT_TAG)'
