@@ -13,7 +13,7 @@ services:
           - comment_db
   ui:
     # build: ./ui
-    image: ${USER_NAME}/ui:logging
+    image: ${USER_NAME}/ui:latest
     environment:
       - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
       - POST_SERVICE_HOST=post
@@ -39,7 +39,7 @@ services:
 
   post:
     # build: ./post-py
-    image: ${USER_NAME}/post:logging
+    image: ${USER_NAME}/post:latest
     environment:
       - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     networks:
@@ -53,7 +53,7 @@ services:
 
   comment:
     # build: ./comment
-    image: ${USER_NAME}/comment:logging
+    image: ${USER_NAME}/comment:latest
     environment:
       - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     networks:
