@@ -58,18 +58,18 @@ def log_event(type, name, message, params = '{}')
                  "event=#{name} | " \
                  "request_id=#{request.env['HTTP_REQUEST_ID']}\n" \
                  "message=\'#{message}\'\n" \
-                 "params: #{params}")
+                 "params: #{params.to_json}")
   when 'info'
     logger.info('service=comment | ' \
                  "event=#{name} | " \
                  "request_id=#{request.env['HTTP_REQUEST_ID']}\n" \
                  "message=\'#{message}\'\n" \
-                 "params: #{params}")
+                 "params: #{params.to_json}")
   when 'warning'
     logger.warn('service=comment | ' \
                  "event=#{name} | " \
                  "request_id=#{request.env['HTTP_REQUEST_ID']}\n" \
                  "message=\'#{message}\'\n" \
-                 "params: #{params}")
+                 "params: #{params.to_json}")
   end
 end
