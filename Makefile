@@ -122,6 +122,11 @@ publish-ext-version: docker-login ext-tag ## Publish the `{EXT_TAG}` taged conta
 	docker push $(DOCKER_REPO)/post:$(EXT_TAG)
 	docker push $(DOCKER_REPO)/ui:$(EXT_TAG)
 
+publish-break-version: docker-login break-tag ## Publish the `{BREAK_TAG}` taged container to DockerHub
+	@echo 'publish $(BREAK_TAG) to $(DOCKER_REPO)'
+	docker push $(DOCKER_REPO)/comment:$(BREAK_TAG)
+	docker push $(DOCKER_REPO)/post:$(BREAK_TAG)
+	docker push $(DOCKER_REPO)/ui:$(BREAK_TAG)
 
 tag: ## Generate container tag
 	@echo 'create comment tag $(COMMENT_VERSION)'
