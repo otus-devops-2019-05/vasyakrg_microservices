@@ -11,9 +11,4 @@ RUN bundle install
 
 ADD . $APP_HOME
 
-ENV COMMENT_DATABASE_HOST comment_db
-ENV COMMENT_DATABASE comment
-
-EXPOSE 9292
-
 CMD ["puma"]
