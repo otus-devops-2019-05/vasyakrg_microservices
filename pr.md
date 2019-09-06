@@ -35,7 +35,7 @@ ulimits:
 ```
 
 ### Задание со **
-  1. в Dockerfile приложений убрали ENV - контейнеры не могли друг друга найти. Прописал в docker-compose.yml напрямую, а так же в Dockerfile приложений, для Тревиса
+  1. в Dockerfile приложений убрали ENV - контейнеры не могли друг друга найти. Прописал в docker-compose.yml напрямую
   2. обнаружил задержку при просмотре любого поста через Zipkin
 
 |  Date       |  Time	    |  Relative Time |	Annotation	  |  Address                |
