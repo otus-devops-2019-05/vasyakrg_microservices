@@ -12,8 +12,8 @@ services:
           - post_db
           - comment_db
   ui:
-    # build: ./ui
-    image: ${USER_NAME}/ui:latest
+    build: ./ui
+    # image: ${USER_NAME}/ui:latest
     environment:
       - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     ports:
@@ -32,8 +32,8 @@ services:
         tag: service.ui
 
   post:
-    # build: ./post-py
-    image: ${USER_NAME}/post:latest
+    build: ./post-py
+    # image: ${USER_NAME}/post:latest
     environment:
       - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     networks:
@@ -46,8 +46,8 @@ services:
         tag: service.post
 
   comment:
-    # build: ./comment
-    image: ${USER_NAME}/comment:latest
+    build: ./comment
+    # image: ${USER_NAME}/comment:latest
     environment:
       - ZIPKIN_ENABLED=${ZIPKIN_ENABLED}
     networks:
