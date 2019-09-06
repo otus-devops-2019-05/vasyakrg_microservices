@@ -23,6 +23,8 @@
 
   > в коде умышленно стояла задержка time.sleep(3), исправил
 
+  -  в приложении ui/views/layout.haml поправил название Microservices Reddit **in** - Travis ругался
+
 ## HW5
 
 ### Задание со *

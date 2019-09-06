@@ -30,6 +30,8 @@
 
   > в коде умышленно стояла задержка time.sleep(3), исправил
 
+  3. в приложении ui/views/layout.haml поправил название Microservices Reddit **in** - Travis ругался
+
 ### От себя
   - прикол с elasticsearch по **max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]** обошел через
       > sudo sysctl -w vm.max_map_count=262144
