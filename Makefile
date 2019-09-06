@@ -5,6 +5,7 @@ MONITORING_DIR=monitoring
 LOGGING_DIR=logging
 
 EXT_TAG=logging
+BREAK_TAG=broken
 
 APPS = comment post ui alertmanager blackbox-exporter prometheus telefraf grafana trickster
 APPS_MON = alertmanager blackbox-exporter prometheus telegraf grafana trickster
@@ -138,6 +139,13 @@ ext-tag: ## Generate container external-tag
 	@echo 'create ui tag $(EXT_TAG)'
 	docker tag $(DOCKER_REPO)/ui $(DOCKER_REPO)/ui:$(EXT_TAG)
 
+break-tag: ## Generate container external-tag
+	@echo 'create comment tag $(EXT_TAG)'
+	docker tag $(DOCKER_REPO)/comment $(DOCKER_REPO)/comment:$(BREAK_TAG)
+	@echo 'create post tag $(EXT_TAG)'
+	docker tag $(DOCKER_REPO)/post $(DOCKER_REPO)/post:$(BREAK_TAG)
+	@echo 'create ui tag $(EXT_TAG)'
+	docker tag $(DOCKER_REPO)/ui $(DOCKER_REPO)/ui:$(BREAK_TAG)
 
 # Login to Docker Hub
 docker-login: ## Login to Docker Hub

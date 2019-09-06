@@ -33,6 +33,9 @@ ulimits:
     hard: -1
 ```
 
+### Задание со **
+  1. в Dockerfile приложение убрали ENV - контейнеры не могли друг друга найти. Прописал в docker-compose.yml напрямую
+
 ## PR checklist
   - [X] Выставил label logging
   - [X] Выставил label logging-1
