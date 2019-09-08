@@ -13,17 +13,8 @@ COMMENT_DATABASE ||= ENV['COMMENT_DATABASE'] || 'test'
 DB_URL ||= "mongodb://#{COMMENT_DATABASE_HOST}:#{COMMENT_DATABASE_PORT}"
 
 # App version and build info
-if File.exist?('VERSION')
-  VERSION ||= File.read('VERSION').strip
-else
-  VERSION ||= "version_missing"
-end
-
-if File.exist?('build_info.txt')
-  BUILD_INFO = File.readlines('build_info.txt')
-else
-  BUILD_INFO = Array.new(2, "build_info_missing")
-end
+VERSION ||= File.read('VERSION').strip
+BUILD_INFO = File.readlines('build_info.txt')
 
 configure do
   Mongo::Logger.logger.level = Logger::WARN
@@ -56,7 +47,7 @@ prometheus.register(comment_count)
 
 # Schedule health check function
 scheduler = Rufus::Scheduler.new
-scheduler.every '5s' do
+scheduler.every '5m' do
   check = JSON.parse(healthcheck_handler(DB_URL, VERSION))
   set_health_gauge(comment_health_gauge, check['status'])
   set_health_gauge(comment_health_db_gauge, check['dependent_services']['commentdb'])

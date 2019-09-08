@@ -1,42 +1,54 @@
-# Выполнено ДЗ № 5
+# Выполнено ДЗ № 6
  - [X] Основное ДЗ
  - [X] Задание со *
  - [X] Задание со **
- - [X] Задание со ***
 
 ## В процессе сделано:
-  - собрал мониторинг Docker контейнеров несколькими доступными средствами
-  - настроил визуализацию через Графану
-  - подключил сборщики метрик приложений
-  - подключил алертинг в слак и на почту
+  - Сбор неструктурированных логов
+  - Визуализация логов
+  - Сбор структурированных логов
+  - Распределенная трасировка
 
 ### Задание со *
-- расширил Makefile
-- активировал экспериментальные (читать-скучные) метрики самого докера, повесил джобу в прометей, нарисовал (спер готовый) даш для графаны, положил в grafana/dashboards/Docker-metrics.json
-- поднял Telegraf-метрики, повесил джобу в прометей, нарисовал (спер готовый) даш для графаны, положил в grafana/dashboards/Telegraf-Docker.json
-- прописал email настройки в Alertmanager, повесил так же на severity: critical
+  - парсинг разобрал по элементам:
+```
+<grok>
+  pattern service=%{WORD:service} \| event=%{WORD:event} \| path=%{URIPATH:path} \| request_id=%{GREEDYDATA:request_id} \| remote_addr=%{IPV4:remote_addr} \| method=%{GREEDYDATA:method} \| response_status=%{INT:response_status}
+</grok>
+```
 
 ### Задание со **
-  - Реализовал автоматическое добавление источника данных и созданных в данном ДЗ дашбордов в графану
-  - к docker-host подключил StackDriver, вытащил кучу метрик по CPU, MEM, Disk и прочему
-    > curl -sSO https://dl.google.com/cloudagents/install-monitoring-agent.sh && sudo bash install-monitoring-agent.sh
-    > curl -sSO https://dl.google.com/cloudagents/install-logging-agent.sh && sudo bash install-logging-agent.sh
+  1. в Dockerfile приложений убрали ENV - контейнеры не могли друг друга найти. Прописал в docker-compose.yml напрямую
+  2. обнаружил задержку при просмотре любого поста через Zipkin
 
-### Задание со ***
-  - подключил прокси для прометея - Trickster и повесил его на 9089 порт, Графану переключил на импорт метрик через него, в Графане добавил дашборд активности
-  - подключил фунционал healthcheck в контейнер ui, что бы отслеживать состояние порта (приложения)
-    ```
-    healthcheck:
-      test: curl -sS http://127.0.0.1:9292 || exit 1
-      interval: 20s
-      timeout: 3s
-      retries: 1
-    ```
-  - подключил отдельный контейнер krg_autoheal_1, задача которого, тестировать другие контейрены на состояние unhealthy и перезапускать их
+|  Date       |  Time	    |  Relative Time |	Annotation	  |  Address                |
+|:------------|:---------:|:--------------:|:---------------|:------------------------|
+| 06.09.2019  | 11:47:39	| 2.088ms	       | Client Start	  | 10.10.2.5:9292 (ui_app) |
+| 06.09.2019  | 11:47:39	| 4.258ms	       | Server Start  	| 10.10.1.7:5000 (post)   |
+| 06.09.2019  | 11:47:42	| **3.014s**     | Server Finish	| 10.10.1.7:5000 (post)   |
+| 06.09.2019  | 11:47:42	| 3.020s	       | Client Finish	| 10.10.2.5:9292 (ui_app) |
+
+  > в коде умышленно стояла задержка time.sleep(3), исправил
+
+  3. в приложении ui/views/layout.haml поправил название Microservices Reddit **in** - Travis ругался
 
 ### От себя
-  - связку Autoheal + AWX посмотрел и даже покрутил, но залазить в ansible совсем не захотелось, дергаю контейнеры примитивно :)
+  - прикол с elasticsearch по **max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]** обошел через
+      > sudo sysctl -w vm.max_map_count=262144
+
+  - так же пришлось поиграть с переменными в контейнере, elasticsearch вообще очень требовательный:
+```
+environment:
+  - node.name=elasticsearch
+  - cluster.initial_master_nodes=elasticsearch
+  - cluster.name=docker-cluster
+  - bootstrap.memory_lock=true
+ulimits:
+  memlock:
+    soft: -1
+    hard: -1
+```
 
 ## PR checklist
-  - [X] Выставил label monitoring
-  - [X] Выставил label monitoring-2
+  - [X] Выставил label logging
+  - [X] Выставил label logging-1

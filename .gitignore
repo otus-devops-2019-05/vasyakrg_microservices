@@ -11,3 +11,4 @@ variables.tf
 .env
 credentials.yml
 .docker-creds
+.DS_Store

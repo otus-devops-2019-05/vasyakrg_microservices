@@ -1,8 +1,31 @@
 # vasyakrg_microservices
 [![Build Status](https://travis-ci.com/otus-devops-2019-05/vasyakrg_microservices.svg?branch=master)](https://travis-ci.com/otus-devops-2019-05/vasyakrg_microservices)
 
+## HW6
+  - Сбор неструктурированных логов
+  - Визуализация логов
+  - Сбор структурированных логов
+  - Распределенная трасировка
+
+### Задание со *  
+  - Составил grok-паттерн в конфигурации fluentd так, чтобы разбирались оба формата логов UI-сервиса (тот, что сделали до этого и текущий) одновременно.
+
+### Задание со **
+  - в Dockerfile приложений убрали ENV - контейнеры не могли друг друга найти. Прописал в docker-compose.yml напрямую
+  - Нашел в сломанной коде умешленную sleep(3), исправил
+
+|  Date       |  Time	    |  Relative Time |	Annotation	  |  Address                |
+|:------------|:---------:|:--------------:|:---------------|:------------------------|
+| 06.09.2019  | 11:47:39	| 2.088ms	       | Client Start	  | 10.10.2.5:9292 (ui_app) |
+| 06.09.2019  | 11:47:39	| 4.258ms	       | Server Start  	| 10.10.1.7:5000 (post)   |
+| 06.09.2019  | 11:47:42	| **3.014s**     | Server Finish	| 10.10.1.7:5000 (post)   |
+| 06.09.2019  | 11:47:42	| 3.020s	       | Client Finish	| 10.10.2.5:9292 (ui_app) |
+
+  > в коде умышленно стояла задержка time.sleep(3), исправил
+
+  -  в приложении ui/views/layout.haml поправил название Microservices Reddit **in** - Travis ругался
+
 ## HW5
-  -
 
 ### Задание со *
  - расширил Makefile
