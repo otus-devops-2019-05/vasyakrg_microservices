@@ -1,6 +1,14 @@
 # vasyakrg_microservices
 [![Build Status](https://travis-ci.com/otus-devops-2019-05/vasyakrg_microservices.svg?branch=master)](https://travis-ci.com/otus-devops-2019-05/vasyakrg_microservices)
 
+## HW7
+  - Разобрал на практике все компоненты Kubernetes, развернул их вручную используя The Hard Way;
+  - Ознакомился с описанием основных примитивов нашего приложения и его дальнейшим запуском в Kubernetes.
+  - завернул всю установку в ansible скрипты
+
+### Задание со *
+  - Описать установку компонентов Kubernetes из THW в виде Ansible-плейбуков в папке kubernetes/ansible;
+
 ## HW6
   - Сбор неструктурированных логов
   - Визуализация логов
