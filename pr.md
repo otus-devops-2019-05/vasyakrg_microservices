@@ -1,54 +1,39 @@
-# Выполнено ДЗ № 6
+# Выполнено ДЗ № 7
  - [X] Основное ДЗ
  - [X] Задание со *
- - [X] Задание со **
 
 ## В процессе сделано:
-  - Сбор неструктурированных логов
-  - Визуализация логов
-  - Сбор структурированных логов
-  - Распределенная трасировка
+- Разобрал на практике все компоненты Kubernetes, развернул их вручную используя The Hard Way work от express-42;
+- Ознакомился с описанием основных примитивов нашего приложения и его дальнейшим запуском в Kubernetes.
 
 ### Задание со *
-  - парсинг разобрал по элементам:
-```
-<grok>
-  pattern service=%{WORD:service} \| event=%{WORD:event} \| path=%{URIPATH:path} \| request_id=%{GREEDYDATA:request_id} \| remote_addr=%{IPV4:remote_addr} \| method=%{GREEDYDATA:method} \| response_status=%{INT:response_status}
-</grok>
-```
+- Описал установку компонентов Kubernetes из THW в виде скприптов и Ansible-плейбуков в папке kubernetes/ansible;
+- запускать
+  > k8s_init.sh
 
-### Задание со **
-  1. в Dockerfile приложений убрали ENV - контейнеры не могли друг друга найти. Прописал в docker-compose.yml напрямую
-  2. обнаружил задержку при просмотре любого поста через Zipkin
-
-|  Date       |  Time	    |  Relative Time |	Annotation	  |  Address                |
-|:------------|:---------:|:--------------:|:---------------|:------------------------|
-| 06.09.2019  | 11:47:39	| 2.088ms	       | Client Start	  | 10.10.2.5:9292 (ui_app) |
-| 06.09.2019  | 11:47:39	| 4.258ms	       | Server Start  	| 10.10.1.7:5000 (post)   |
-| 06.09.2019  | 11:47:42	| **3.014s**     | Server Finish	| 10.10.1.7:5000 (post)   |
-| 06.09.2019  | 11:47:42	| 3.020s	       | Client Finish	| 10.10.2.5:9292 (ui_app) |
-
-  > в коде умышленно стояла задержка time.sleep(3), исправил
-
-  3. в приложении ui/views/layout.haml поправил название Microservices Reddit **in** - Travis ругался
+- убить все на фиг
+  > k8s_destroy.sh
 
 ### От себя
-  - прикол с elasticsearch по **max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]** обошел через
-      > sudo sysctl -w vm.max_map_count=262144
-
-  - так же пришлось поиграть с переменными в контейнере, elasticsearch вообще очень требовательный:
+  - не победил, почему нет проброса dns от coredns в голову. видимо где-то в фаерах нет нужного правила.
 ```
-environment:
-  - node.name=elasticsearch
-  - cluster.initial_master_nodes=elasticsearch
-  - cluster.name=docker-cluster
-  - bootstrap.memory_lock=true
-ulimits:
-  memlock:
-    soft: -1
-    hard: -1
+nslookup kubernetes
+Server:    10.32.0.10
+Address 1: 10.32.0.10
+
+nslookup: can't resolve 'kubernetes'
+command terminated with exit code 1
+```
+а вот если
+```
+nslookup kubernetes 10.200.0.6
+Server:    10.200.0.6
+Address 1: 10.200.0.6 10-200-0-6.kube-dns.kube-system.svc.cluster.local
+
+Name:      kubernetes
+Address 1: 10.32.0.1 kubernetes.default.svc.cluster.local
 ```
 
 ## PR checklist
-  - [X] Выставил label logging
-  - [X] Выставил label logging-1
+  - [X] Выставил label kebernetes
+  - [X] Выставил label kebernetes-1
