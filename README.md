@@ -1,6 +1,17 @@
 # vasyakrg_microservices
 [![Build Status](https://travis-ci.com/otus-devops-2019-05/vasyakrg_microservices.svg?branch=master)](https://travis-ci.com/otus-devops-2019-05/vasyakrg_microservices)
 
+## HW8
+  - Развернул локальное окружение для работы с Kubernetes
+  - Развернул Kubernetes в GKE
+  - Запустил reddit в Kubernetes
+
+### Задание со *
+  - Развернул Kubenetes-кластер в GKE с помощью Terraform
+  - Создал YAML-манифесты для описания созданных сущностей для включения dashboard
+    - после применения манифестов из папки /kubernetes/kube-system - поднимается дашбоард по [ссылке](http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/)
+    - запускаем kubectl proxy и пользуемся
+
 ## HW7
   - Разобрал на практике все компоненты Kubernetes, развернул их вручную используя The Hard Way;
   - Ознакомился с описанием основных примитивов нашего приложения и его дальнейшим запуском в Kubernetes.

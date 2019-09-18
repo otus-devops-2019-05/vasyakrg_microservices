@@ -5,7 +5,6 @@ rp.md
 *.tfstate.*.backup
 *.tfstate.backup
 *.tfvars
-variables.tf
 .terraform/
 .idea
 .env
