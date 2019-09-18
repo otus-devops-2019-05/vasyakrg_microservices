@@ -9,6 +9,8 @@
 ### Задание со *
   - Развернул Kubenetes-кластер в GKE с помощью Terraform
   - Создал YAML-манифесты для описания созданных сущностей для включения dashboard
+    - после применения манифестов из папки /kubernetes/kube-system - поднимается дашбоард по [ссылке](http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/)
+    - запускаем kubectl proxy и пользуемся
 
 ## HW7
   - Разобрал на практике все компоненты Kubernetes, развернул их вручную используя The Hard Way;

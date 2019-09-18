@@ -10,6 +10,8 @@
 ### Задание со *
 - Развернул Kubenetes-кластер в GKE с помощью Terraform
 - Создал YAML-манифесты для описания созданных сущностей для включения dashboard
+  - после применения манифестов из папки /kubernetes/kube-system - поднимается дашбоард по [ссылке](http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/)
+  - запускаем kubectl proxy и пользуемся
 
 ### От себя
   - у меня на Маке, при установке и развертке minikube, дашбоард плагин был выключен
