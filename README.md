@@ -1,6 +1,35 @@
 # vasyakrg_microservices
 [![Build Status](https://travis-ci.com/otus-devops-2019-05/vasyakrg_microservices.svg?branch=master)](https://travis-ci.com/otus-devops-2019-05/vasyakrg_microservices)
 
+## HW9
+- Ingress Controller
+- Ingress
+- Secret
+- TLS
+- LoadBalancer Service
+- Network Policies
+- PersistentVolumes
+- PersistentVolumeClaims
+
+### Задание со *
+- Обновить mongo-network-policy.yml так, чтобы post-сервис дошел до базы данных.
+
+### Задание со **
+Описать создаваемый объект Secret в виде Kubernetes манифеста.
+
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ui-ingress
+  namespace: dev
+type: Opaque
+data:
+  server.crt: LS0tLS1CRUdJTiBDR...
+  server.key: LS0tLS1CRUdJTiBQU...
+```
+с помощью оборота cat tls.key | base64 и cat tls.crt | base64 - получил нужный мне шифр
+
 ## HW8
   - Развернул локальное окружение для работы с Kubernetes
   - Развернул Kubernetes в GKE
