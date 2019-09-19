@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: zipkin
+  labels:
+    app: reddit
+    component: zipkin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reddit
+      component: zipkin
+  template:
+    metadata:
+      name: zipkin
+      labels:
+        app: reddit
+        component: zipkin
+    spec:
+      containers:
+        - image: openzipkin/zipkin
+          name: zipkin
