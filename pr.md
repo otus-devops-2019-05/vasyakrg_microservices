@@ -1,32 +1,50 @@
-# Выполнено ДЗ № 8
+# Выполнено ДЗ № 9
  - [X] Основное ДЗ
  - [X] Задание со *
+ - [X] Задание со **
 
 ## В процессе сделано:
-- Развернул локальное окружение для работы с Kubernetes
-- Развернул Kubernetes в GKE
-- Запустил reddit в Kubernetes
+- Ingress Controller
+- Ingress
+- Secret
+- TLS
+- LoadBalancer Service
+- Network Policies
+- PersistentVolumes
+- PersistentVolumeClaims
 
 ### Задание со *
-- Развернул Kubenetes-кластер в GKE с помощью Terraform
-- Создал YAML-манифесты для описания созданных сущностей для включения dashboard
-  - после применения манифестов из папки /kubernetes/kube-system - поднимается дашбоард по [ссылке](http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/)
-  - запускаем kubectl proxy и пользуемся
+- Обновить mongo-network-policy.yml так, чтобы post-сервис дошел до базы данных.
+```
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app: reddit
+              component: comment
+        - podSelector:
+            matchLabels:
+              app: reddit
+              component: post
+```
 
-### От себя
-  - у меня на Маке, при установке и развертке minikube, дашбоард плагин был выключен
-    - включил через 'minikube addons enable dashboard', потом прописал ему service c NodePort в файлики ./kubernetes/kube-system/dashboard-service.yml
-    - далее, была проблема с линком для входа, предлагался уже зарезанный линк http://localhost:8001/ui, обошел через http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/about?namespace=default
-    - далее возникла проблема с токеном. не стал создавать RBAC сущности, тупо захардкодил через
-    ```
-    kubectl edit deployment/kubernetes-dashboard --namespace=kube-system.
+### Задание со **
+Описать создаваемый объект Secret в виде Kubernetes манифеста.
 
-      containers:
-      - args:
-        - --auto-generate-certificates
-        - --enable-skip-login            # <-- add this line
-    ```
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ui-ingress
+  namespace: dev
+type: Opaque
+data:
+  server.crt: LS0tLS1CRUdJTiBDR...
+  server.key: LS0tLS1CRUdJTiBQU...
+```
+с помощью оборота cat tls.key | base64 и cat tls.crt | base64 - получил нужный мне шифр
+
 
 ## PR checklist
   - [X] Выставил label kebernetes
-  - [X] Выставил label kebernetes-2
+  - [X] Выставил label kebernetes-3

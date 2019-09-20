@@ -11,3 +11,5 @@ rp.md
 credentials.yml
 .docker-creds
 .DS_Store
+*.key
+*.crt
