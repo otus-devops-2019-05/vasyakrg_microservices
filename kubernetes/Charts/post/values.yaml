@@ -1,0 +1,9 @@
+service:
+  internalPort: 5000
+  externalPort: 5000
+
+image:
+  repository: vasyakrg/post
+  tag: latest
+
+databaseHost:
