@@ -1,50 +1,29 @@
-# Выполнено ДЗ № 9
+# Выполнено ДЗ № 10
  - [X] Основное ДЗ
  - [X] Задание со *
  - [X] Задание со **
 
 ## В процессе сделано:
-- Ingress Controller
-- Ingress
-- Secret
-- TLS
-- LoadBalancer Service
-- Network Policies
-- PersistentVolumes
-- PersistentVolumeClaims
+- Работа с Helm
+  - поставил helm, helm+plugin, helm3
+  - и итогде остановился в понимании, что дальше буду крутить helm3
+- Развертывание Gitlab в Kubernetes
+  - ох и намаялся же.. пришлось перебивать кластер с нуля, никак не хотели на действующий кластер применятся легаси-авторизации ((
+  - потом возникла проблема с созданием дисков под гитлаб, несколько раз создавал, несколько раз в разнобой подвисало создание диска - решил тем, что перенес кластер с США в Европу - там завелось с пол пинка
+- Запуск CI/CD конвейера в Kubernetes
+  - ну тут все штатно было
+
 
 ### Задание со *
-- Обновить mongo-network-policy.yml так, чтобы post-сервис дошел до базы данных.
-```
-  ingress:
-    - from:
-        - podSelector:
-            matchLabels:
-              app: reddit
-              component: comment
-        - podSelector:
-            matchLabels:
-              app: reddit
-              component: post
-```
+- динамические окружения работают в каждом из проектов
+- избавился от auto_devops, точнее оставил два варианта (как просили по заданию)
+- по хельму опять же три проекта сделал в трех вариантах - helm, helm+plugin, helm3
+- reddit-deploy так же избавил от auto_devops
 
 ### Задание со **
-Описать создаваемый объект Secret в виде Kubernetes манифеста.
-
-```
-apiVersion: v1
-kind: Secret
-metadata:
-  name: ui-ingress
-  namespace: dev
-type: Opaque
-data:
-  server.crt: LS0tLS1CRUdJTiBDR...
-  server.key: LS0tLS1CRUdJTiBQU...
-```
-с помощью оборота cat tls.key | base64 и cat tls.crt | base64 - получил нужный мне шифр
-
+- связал пайпы приложений с пайпом reddit, так, что если в ветки master любых из проектов делается пуш, дергается пайп reddit, который поднимает staging, ну и ждет от человека кнопотыка, что бы вылить в prod
+- ручную выкатку убирать не стал. по моему, это неправильно.
 
 ## PR checklist
   - [X] Выставил label kebernetes
-  - [X] Выставил label kebernetes-3
+  - [X] Выставил label kebernetes-4

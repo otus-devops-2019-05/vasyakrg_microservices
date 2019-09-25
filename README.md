@@ -1,6 +1,21 @@
 # vasyakrg_microservices
 [![Build Status](https://travis-ci.com/otus-devops-2019-05/vasyakrg_microservices.svg?branch=master)](https://travis-ci.com/otus-devops-2019-05/vasyakrg_microservices)
 
+## HW10
+- Работа с Helm
+- Развертывание Gitlab в Kubernetes
+- Запуск CI/CD конвейера в Kubernetes
+
+### Задание со *
+- динамические окружения работают в каждом из проектов
+- избавился от auto_devops, точнее оставил два варианта (как просили по заданию)
+- по хельму опять же три проекта сделал в трех вариантах - helm, helm+plugin, helm3
+- reddit-deploy так же избавил от auto_devops
+
+### Задание со **
+- связал пайпы приложений с пайпом reddit, так, что если в ветки master любых из проектов делается пуш, дергается пайп reddit, который поднимает staging, ну и ждет от человека кнопотыка, что бы вылить в prod
+- ручную выкатку убирать не стал. по моему, это неправильно.
+
 ## HW9
 - Ingress Controller
 - Ingress
