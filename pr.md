@@ -7,6 +7,7 @@
 - включил сбор метрик с node-exporter и kubeStateMetrics
 - прописал отдельные джобы для группировки по приложениям post, comment, ui
 - добавил собственные дашборды в графану и параметризировал (/monitoring/grafana/dashboards/UI_Service_monitoring_k8s.json)
+- поднял EFK и поигрался с отчетами логирования
 
 
 ### Задание со *
@@ -36,7 +37,9 @@ prometheus:
 ```
 Error: object is being deleted: customresourcedefinitions.apiextensions.k8s.io
 ```
+- ну и как же я люблю эти "облака" )) на моменте поднятия EFK, гугль решил апнуть версию k8s на моем кластере, а я и не сразу понял, что происходит
+  - если бы винда стояла на компе - пошел бы и ее переустанавливать, пока не разобрался, что там обычный maintenance идет
 
 ## PR checklist
   - [X] Выставил label kebernetes
-  - [X] Выставил label kebernetes-4
+  - [X] Выставил label kebernetes-5
