@@ -4,7 +4,7 @@ rbac:
 alertmanager:
   ## If false, alertmanager will not be installed
   ##
-  enabled: false
+  enabled: true
 
   # Defines the serviceAccountName to use when `rbac.create=false`
   serviceAccountName: default
@@ -569,24 +569,39 @@ pushgateway:
 alertmanagerFiles:
   alertmanager.yml: |-
     global:
-      # slack_api_url: ''
-
-    receivers:
-      - name: default-receiver
-        # slack_configs:
-        #  - channel: '@you'
-        #    send_resolved: true
-
+      slack_api_url: 'https://hooks.slack.com/services/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'
     route:
-      group_wait: 10s
-      group_interval: 5m
-      receiver: default-receiver
-      repeat_interval: 3h
+      receiver: 'slack-notifications'
+    receivers:
+    - name: 'slack-notifications'
+      slack_configs:
+      - channel: '#prometheus'
 
 ## Prometheus server ConfigMap entries
 ##
 serverFiles:
-  alerts: {}
+  alerts:
+    groups:
+    - name: Nodes
+      rules:
+      - alert: InstanceDown
+        expr: up{job="kubernetes-nodes"} == 0
+        for: 1m
+        labels:
+          severity: page
+        annotations:
+          description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minutes'
+          summary: 'Instance {{ $labels.instance }} down'
+    - name: APIServers
+      rules:
+      - alert: InstanceAPIServerDown
+        expr: up{job="kubernetes-apiservers"} == 0
+        for: 1m
+        labels:
+          severity: page
+        annotations:
+          description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute'
+          summary: 'Instance API server {{ $labels.instance }} down'
   rules: {}
 
   prometheus.yml:
@@ -808,22 +823,54 @@ serverFiles:
             target_label: kubernetes_pod_name
 
       ## My endpoints for PODS
-      - job_name: 'reddit-endpoints'
-
+      - job_name: 'ui-endpoints'
         kubernetes_sd_configs:
           - role: endpoints
-
         relabel_configs:
           - source_labels: [__meta_kubernetes_service_label_app]
             action: keep
             regex: reddit
-
+          - source_labels: [__meta_kubernetes_service_label_component]
+            action: keep
+            regex: ui
           - action: labelmap
             regex: __meta_kubernetes_service_label_(.+)
-
           - source_labels: [__meta_kubernetes_namespace]
             target_label: kubernetes_namespace
+          - source_labels: [__meta_kubernetes_service_name]
+            target_label: kubernetes_name
 
+      - job_name: 'post-endpoints'
+        kubernetes_sd_configs:
+          - role: endpoints
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_label_app]
+            action: keep
+            regex: reddit
+          - source_labels: [__meta_kubernetes_service_label_component]
+            action: keep
+            regex: post
+          - action: labelmap
+            regex: __meta_kubernetes_service_label_(.+)
+          - source_labels: [__meta_kubernetes_namespace]
+            target_label: kubernetes_namespace
+          - source_labels: [__meta_kubernetes_service_name]
+            target_label: kubernetes_name
+
+      - job_name: 'comment-endpoints'
+        kubernetes_sd_configs:
+          - role: endpoints
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_label_app]
+            action: keep
+            regex: reddit
+          - source_labels: [__meta_kubernetes_service_label_component]
+            action: keep
+            regex: comment
+          - action: labelmap
+            regex: __meta_kubernetes_service_label_(.+)
+          - source_labels: [__meta_kubernetes_namespace]
+            target_label: kubernetes_namespace
           - source_labels: [__meta_kubernetes_service_name]
             target_label: kubernetes_name
 
